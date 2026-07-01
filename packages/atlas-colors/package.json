@@ -1,0 +1,45 @@
+{
+  "name": "@spiffdog-design/atlas-colors",
+  "version": "0.0.0",
+  "description": "Atlas Design System color palette (OKLab tokens and CSS custom properties)",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./index.css": "./dist/index.css"
+  },
+  "scripts": {
+    "build": "node ./scripts/prune-dist-typings.js && rollup -c",
+    "build-css-modules": "node ./scripts/build-css-modules.js",
+    "dev": "node ./scripts/prune-dist-typings.js && rollup -c -w",
+    "lint": "biome ci .",
+    "check-types": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@radix-ui/react-tooltip": "^1.2.7",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@spiffdog-design/biome-config": "*",
+    "@spiffdog-design/typescript-config": "*",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "rollup": "^2.80.0",
+    "rollup-plugin-scss": "^4.0.0",
+    "sass": "^1.77.8",
+    "tslib": "^2.2.0",
+    "typescript": "5.9.2",
+    "vitest": "^3.2.6"
+  }
+}

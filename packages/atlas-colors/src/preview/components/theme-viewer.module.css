@@ -1,0 +1,15 @@
+.root {
+  background-color: var(--gray12);
+  border: 1px solid var(--gray7);
+  box-sizing: border-box;
+  color: var(--gray1);
+  color-scheme: light dark;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+}

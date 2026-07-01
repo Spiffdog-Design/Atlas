@@ -1,0 +1,41 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="atlas components/Overview" />
+
+# Components
+
+`@spiffdog-design/atlas-components` provides shared React components for Atlas applications,
+styled with CSS Modules on top of atlas-colors semantic tokens.
+
+## Components
+
+Browse the **atlas components** section in the sidebar for interactive examples of each
+component.
+
+## Usage
+
+Import the global stylesheet **once** at the root of your application (for example in
+`main.tsx`, `layout.tsx`, or your app shell). You do not need to import it again when adding
+more components.
+
+```ts
+// app entry — import once
+import "@spiffdog-design/atlas-components/styles.css";
+```
+
+```ts
+import { Button, Card, Code } from "@spiffdog-design/atlas-components";
+```
+
+Individual components can also be imported directly:
+
+```ts
+import { Button } from "@spiffdog-design/atlas-components/button";
+```
+
+## Styling
+
+Component styles use CSS cascade layers (`theme` → `components` → `variants`). Palette scales
+from atlas-colors are mapped to semantic tokens (`--color-bg`, `--color-primary`, `--space-*`,
+etc.) in `tokens.css`. Components consume `--color-*` and other semantic tokens, not raw
+palette steps.

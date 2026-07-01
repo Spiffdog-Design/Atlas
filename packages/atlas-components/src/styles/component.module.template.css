@@ -1,0 +1,24 @@
+/*
+ * Shared component CSS Module template — copy when adding components.
+ *
+ * @layer components  — structural layout, typography, borders
+ * @layer variants    — data-* props, headless UI state ([data-disabled], etc.)
+ *
+ * Consumer app *.module.css files stay UNLAYERED for top cascade priority.
+ */
+
+@layer components {
+  .root {
+    /* structural styles */
+  }
+}
+
+@layer variants {
+  .root[data-variant="primary"] {
+    /* variant styles */
+  }
+
+  .root[data-disabled] {
+    /* headless UI / disabled state */
+  }
+}

@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Introduction" />
+
+# Atlas Design System
+
+Welcome to the Atlas documentation site. This Storybook catalogs the OKLab color palette
+and shared React components used across Atlas applications.
+
+## Packages
+
+- **@spiffdog-design/atlas-colors** — Palette scales as TypeScript (`palette`) and CSS
+  custom properties (`--gray9`, `--blue6`, …). Each token uses `light-dark()` so a single
+  variable adapts to the user's color scheme. See [Colors](./?path=/docs/atlas-colors-overview--docs)
+  for swatches and import examples.
+- **@spiffdog-design/atlas-components** — React components styled with CSS Modules. Imports
+  atlas-colors and maps palette steps to semantic tokens (`--color-bg`, `--color-primary`,
+  `--space-*`, etc.) in `tokens.css`. See
+  [Components](./?path=/docs/atlas-components-overview--docs) for usage and styling conventions.
+
+## Development
+
+Run `npm run dev` from the repository root to start this Storybook, or `npm run dev`
+inside `apps/docs`.

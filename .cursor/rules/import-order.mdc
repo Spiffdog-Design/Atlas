@@ -1,0 +1,45 @@
+---
+description: Import order — third-party, workspace packages, components, component utils, styling
+alwaysApply: true
+---
+
+# Import Order
+
+Separate import groups with a **blank line** between each. Sort named specifiers naturally within a group.
+
+## Groups (top → bottom)
+
+1. **Third-party** — npm packages (`react`, `@base-ui/*`, `@storybook/*`, `vitest`, `classnames`, etc.)
+2. **Workspace packages** — `@spiffdog-design/atlas-components`, `@spiffdog-design/atlas-colors`, other `@spiffdog-design/*` monorepo packages
+3. **Components** — relative UI modules (`./index.js`, `../button/index.js`) — not `*.utils` or styles
+4. **Component utils** — colocated `*.utils` modules (`./button.utils.js`, `../button/button.utils.js`)
+5. **Styling** — CSS modules and stylesheets (`*.module.css`, `*.css`) last
+
+## Examples
+
+```typescript
+// ✅ GOOD — packages/atlas-components/src/form/field/index.tsx
+import { useId } from "react";
+
+import { Button } from "@spiffdog-design/atlas-components/button";
+
+import { Label } from "../label/index.js";
+
+import { getFieldErrorId } from "./field.utils.js";
+
+import styles from "./field.module.css";
+```
+
+```typescript
+// ❌ BAD — styles before utils, utils before components
+import styles from "./field.module.css";
+import { getFieldErrorId } from "./field.utils.js";
+import { Label } from "../label/index.js";
+import { useId } from "react";
+```
+
+## Enforcement
+
+Run `npm run format` from the repo root, or `npx biome check --write .` in a package. Import groups are configured in `packages/biome-config/base.json` under `assist.actions.source.organizeImports.options.groups`.
+
+Do not import component utils before the components that use them. Do not import styles before utils.

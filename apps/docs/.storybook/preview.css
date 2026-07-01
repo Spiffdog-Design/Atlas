@@ -1,0 +1,26 @@
+/* Fullscreen layout for canvas stories only — docs render in #storybook-docs */
+html:has(body.sb-main-fullscreen #storybook-root:not(:empty)),
+body.sb-main-fullscreen:has(#storybook-root:not(:empty)),
+body.sb-main-fullscreen:has(#storybook-root:not(:empty)) #storybook-root {
+  height: 100%;
+}
+
+body.sb-main-fullscreen:has(#storybook-root:not(:empty)) {
+  background-color: var(--gray8);
+  margin: 0;
+}
+
+body.sb-main-fullscreen:has(#storybook-root:not(:empty)) #storybook-root {
+  display: flex;
+  flex-direction: column;
+}
+
+.sb-full-height-story {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: 8px;
+}

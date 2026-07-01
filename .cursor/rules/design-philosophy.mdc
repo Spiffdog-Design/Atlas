@@ -1,0 +1,57 @@
+---
+description: Guidance for distinctive, intentional visual design when building Atlas components, Storybook stories, or docs. Typography, palette, and choices that don't read as templated defaults.
+alwaysApply: false
+---
+
+# Design Philosophy
+
+Approach Atlas UI as a design lead building a system with a clear point of view — not a generic component kit. Make deliberate choices about palette, typography, and layout that serve Atlas consumers, and take one justified aesthetic risk per surface.
+
+## Ground it in Atlas
+
+Atlas is a shared design system: React components (`@spiffdog-design/atlas-components`), OKLab color scales (`@spiffdog-design/atlas-colors`), semantic tokens (`tokens.css`), and Storybook docs (`apps/docs`). Before designing a component or doc page, name the consumer, the component's single job, and how it fits the system. Distinctive choices should strengthen the system — not fight it with one-off values.
+
+**Use the token system.** Map palette steps to semantic intent in `tokens.css`; components consume `--color-*`, `--space-*`, `--radius-*`. Raw palette vars (`--gray9`, `--blue6`) belong in token definitions and Storybook color stories, not scattered through component CSS.
+
+**Respect the styling architecture.** CSS Modules with cascade layers (`theme` → `components` → `variants`). Variants via `data-*` attributes, not JS class toggles. See `component-library-architecture` for full rules.
+
+## Design principles
+
+For component and Storybook surfaces, the default story or docs hero is a thesis — show the component's most characteristic use, not a placeholder card grid.
+
+Typography carries personality. Pair display and body faces deliberately; set a clear type scale with intentional weights and spacing. Type should be memorable, not a neutral delivery vehicle.
+
+Structure is information. Labels, dividers, and markers should encode real content structure — numbered steps only when order matters (a process, a timeline). Question decorative patterns before using them.
+
+Use motion deliberately: load sequences, hover micro-interactions, focus transitions. One orchestrated moment usually lands harder than scattered effects. Respect `prefers-reduced-motion`.
+
+Match complexity to the vision. Maximalist directions need elaborate execution; minimal directions need precision in spacing, type, and detail.
+
+Consider copy carefully. Placeholder text in stories and MDX should read like real UI copy, not lorem ipsum boilerplate.
+
+## Process: plan, critique, build
+
+AI-generated design clusters around familiar defaults: warm cream + terracotta serif, near-black + acid accent, or hairline broadsheet layouts. These are legitimate for some briefs but are defaults, not choices. Where a brief pins direction, follow it. Where an axis is free, don't spend that freedom on a default look.
+
+Work in two passes:
+
+1. **Plan** — compact token system: 4–6 named colors (mapped to atlas palette steps), typefaces for display + body + utility, layout concept (prose + ASCII wireframe if helpful), and one signature element.
+2. **Critique** — if any part reads like a generic default rather than a choice for this component or doc, revise before coding. Derive colors and type from the plan via semantic tokens.
+
+When writing CSS, avoid selector conflicts — especially between structural classes and element selectors canceling padding/margins. Cascade layers and `data-*` variants reduce this risk; still review adjacent section spacing.
+
+## Restraint and self-critique
+
+Spend boldness in one place. Let the signature element be memorable; keep everything else quiet. Quality floor: responsive layouts, visible keyboard focus (`--focus-ring`), reduced motion respected.
+
+Critique as you build — screenshots in Storybook help. Before shipping: remove decoration that doesn't serve the brief.
+
+## Writing in design
+
+Words exist to make UI easier to understand and use — they are design material.
+
+- Write from the user's side: name things by what people control ("Notifications"), not system internals
+- Active voice: "Save changes," not "Submit"
+- Consistent vocabulary through flows (button → toast → confirmation share the same verb)
+- Errors explain what happened and how to fix it; empty states invite action
+- Sentence case, plain verbs, tone matched to the brand; each label does one job

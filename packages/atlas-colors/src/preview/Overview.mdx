@@ -1,0 +1,32 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="atlas colors/Overview" />
+
+# Colors
+
+`@spiffdog-design/atlas-colors` provides the Atlas design system palette as TypeScript tokens
+and CSS custom properties.
+
+## Palette
+
+Browse the [Themes](./?path=/story/atlas-colors-themes--demo) story for interactive swatches of every
+palette scale, including CSS variable names and token references.
+
+## Usage
+
+```ts
+import { palette } from "@spiffdog-design/atlas-colors";
+
+const primary = palette.blue[9];
+```
+
+```css
+@import "@spiffdog-design/atlas-colors/index.css";
+
+.card {
+  background: var(--blue9);
+  color: var(--gray1);
+}
+```
+
+Each token uses `light-dark()` so a single custom property adapts to the user's color scheme.

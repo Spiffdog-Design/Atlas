@@ -1,0 +1,16 @@
+{
+  "extends": "../typescript-config/react-library.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "outDir": "dist",
+    "declarationDir": "types",
+    "rootDir": "src",
+    "module": "esnext",
+    "target": "ES2019",
+    "moduleResolution": "node",
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": false
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

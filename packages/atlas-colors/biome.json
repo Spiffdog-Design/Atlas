@@ -1,0 +1,34 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.2/schema.json",
+  "root": false,
+  "extends": [
+    "@spiffdog-design/biome-config/base",
+    "@spiffdog-design/biome-config/react-internal"
+  ],
+  "overrides": [
+    {
+      "includes": ["rollup.config.js"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noCommonJs": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["scripts/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noCommonJs": "off",
+            "useNodejsImportProtocol": "off"
+          },
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    }
+  ]
+}

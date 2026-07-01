@@ -1,0 +1,52 @@
+.root {
+  display: grid;
+  grid-template-rows: 40px auto;
+  gap: 8px;
+  align-items: center;
+  justify-items: center;
+}
+
+.checker {
+  background: url("../../assets/checkers.png");
+}
+
+.swatch {
+  background-color: var(--swatch-bg);
+  height: 40px;
+  width: 40px;
+}
+
+.swatchPlain {
+  height: 100%;
+  width: 100%;
+  background-color: var(--swatch-bg);
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.tooltip {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: sans-serif;
+  padding: 8px;
+}
+
+.tooltipGrid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 8px;
+  row-gap: 16px;
+  padding: 16px;
+}
+
+.preview {
+  background: url("../../assets/checkers.png");
+  height: 40px;
+  width: 40px;
+}

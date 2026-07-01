@@ -1,0 +1,30 @@
+@layer components {
+  .button {
+    appearance: none;
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-md);
+    color: var(--color-primary-text);
+    cursor: pointer;
+    font: inherit;
+    min-height: var(--control-height-md);
+    padding: var(--space-2) var(--space-4);
+    transition: var(--transition-base);
+  }
+}
+
+@layer variants {
+  .button:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .button:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .button[data-disabled] {
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "@spiffdog-design/atlas-components",
+  "version": "0.0.0",
+  "description": "Atlas Design System React components library",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.module.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles/index.css",
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "default": "./dist/*/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node ./scripts/copy-styles.js",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "lint": "biome ci .",
+    "generate:component": "turbo gen react-component",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@spiffdog-design/atlas-colors": "*",
+    "@spiffdog-design/biome-config": "*",
+    "@spiffdog-design/typescript-config": "*",
+    "@storybook/react": "^8.6.18",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "peerDependencies": {
+    "@spiffdog-design/atlas-colors": "*"
+  }
+}

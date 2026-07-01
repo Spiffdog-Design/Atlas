@@ -1,0 +1,203 @@
+---
+description: Atlas component library architecture — folder structure, platform-first behavior, styling, theming, tokens, and testing conventions
+alwaysApply: true
+---
+
+# Component Library Architecture
+
+Atlas Design System monorepo. **CSS Modules only** — no Tailwind.
+
+## Stack
+
+- React 19, TypeScript, Biome (2-space indent)
+- Turborepo workspaces: `apps/*`, `packages/*`
+- Colors: `@spiffdog-design/atlas-colors` (OKLab palette scales with `light-dark()`)
+- Components: `@spiffdog-design/atlas-components`
+- Docs: Storybook in `apps/docs` (stories colocated in `packages/atlas-components/src` and `packages/atlas-colors/src/preview`)
+- Headless UI (when native HTML/CSS is insufficient): `@base-ui/react` — behavior/a11y only; never reimplement dialogs, menus, focus traps
+- Tests: Vitest + Testing Library; Storybook for all shared components
+
+```ts
+import { Button } from "@spiffdog-design/atlas-components";
+import { palette } from "@spiffdog-design/atlas-colors";
+import "@spiffdog-design/atlas-components/styles.css";
+```
+
+Storybook resolves package imports via Vite aliases in `apps/docs/.storybook/main.ts`.
+
+## Monorepo layout
+
+```
+apps/docs/                       # Storybook — MDX docs + preview config
+packages/
+  atlas-colors/                  # Palette tokens (TS + CSS custom properties)
+  atlas-components/              # Shared React components
+    src/
+      styles/                    # index.css, tokens.css, globals.css, component.module.template.css
+      button/                    # Per-component folder (organize by type as library grows)
+      index.ts
+  biome-config/
+  typescript-config/
+```
+
+Per component (e.g. `packages/atlas-components/src/button/`):
+
+| File | Purpose |
+|------|---------|
+| `index.tsx` | React component — JSX, hooks, handlers that delegate to utils |
+| `button.module.css` | Layered CSS Module styles |
+| `button.stories.tsx` | Storybook (`atlas components/Button`) |
+| `button.utils.ts` | Pure functions — validation, formatters, type guards, defaults |
+| `button.test.ts` | Vitest unit tests for **every export** in `button.utils.ts` |
+
+## Styling rules
+
+1. **CSS cascade layers** — declared in `packages/atlas-components/src/styles/index.css`:
+   ```css
+   @layer theme, components, variants, vendor;
+   ```
+   | Layer | Contents | Priority |
+   |-------|----------|----------|
+   | `theme` | atlas-colors, `tokens.css`, `globals.css` | lowest |
+   | `components` | shared component structure in `*.module.css` | |
+   | `variants` | `data-*` props and headless UI state in `*.module.css` | |
+   | `vendor` | third-party library overrides | |
+   | *(unlayered)* | consumer app `*.module.css`, ad-hoc UI tweaks | **highest** |
+
+   Shared components: structure in `@layer components`, variants/state in `@layer variants` (see `styles/component.module.template.css`). Consumer app modules stay **unlayered**.
+
+2. **CSS Modules** for all component styles. Global CSS only via layered imports in `styles/index.css`. Storybook uses `localsConvention: "camelCaseOnly"`.
+3. **Data-attributes for variants** — map props to `data-*` on the DOM; style in `@layer variants` (e.g. `[data-variant="primary"]`). No prop-driven conditional class names in JS.
+4. **Headless UI state** — style via `[data-disabled]`, `[data-checked]`, `[data-highlighted]` in `@layer variants`, not `className` callbacks.
+5. **Static classes only in JS** — join `styles.root` and passthrough `className`; no variant toggles in JS.
+6. **Use tokens** from `styles/tokens.css` for spacing, sizing, color, radius, and typography.
+
+## Platform-first behavior
+
+**Prefer native HTML and CSS** for interaction, state, and accessibility. JavaScript is **progressive enhancement** — not the primary way to drive component behavior.
+
+**Goal:** encode behavior in markup and styles so it works across frameworks (vanilla JS, Lit, Web Components, React, Angular, etc.) without reimplementing logic in each.
+
+### Priority order
+
+1. **Semantic HTML** — use the element that already does the job (`button`, `a`, `input`, `select`, `textarea`, `details`/`summary`, `dialog`, `fieldset`, `label`, etc.)
+2. **CSS** — pseudo-classes (`:hover`, `:focus-visible`, `:checked`, `:disabled`), selectors (`:has()`), attribute selectors (`[data-*]`, `[aria-*]`), and **modern platform CSS** (see below) for layout, motion, and visual state
+3. **Declarative DOM** — variants and state as **`data-*` and native attributes** on the element; consumers set attributes, CSS handles presentation
+4. **JavaScript** — only when platform primitives are insufficient (complex keyboard models, focus traps, virtualization, async validation, etc.); delegate a11y-heavy patterns to `@base-ui/react` rather than bespoke handlers
+
+### Prefer native primitives
+
+| Need | Reach for | Not first |
+|------|-----------|-----------|
+| Disclosure / accordion | `details`/`summary`, `hidden` | `useState` + click toggles |
+| Modal / alert | `<dialog>`, `form[method="dialog"]` | Portal + manual focus trap |
+| Popover / tooltip (when supported) | Popover API + CSS anchor positioning, `title` | Positioning JS on `mouseenter` |
+| Aligned overlays / menus | `anchor-name`, `position-anchor`, `position-area` | `getBoundingClientRect` + manual placement |
+| Nested grid alignment | `subgrid` | JS-measured column sync |
+| Form validation | `required`, `pattern`, `type`, `:invalid` | Custom validators before native fails |
+| Toggle / selection | `checkbox`, `radio`, `select`, `:checked` | `onClick` + boolean state for styling |
+| Navigation | `<a href>`, `<button type="button">` | `div` + `onClick` |
+
+### Modern CSS platform features
+
+**Prefer built-in CSS** over bespoke JS when evergreen browsers ship the behavior. Atlas targets current evergreen browsers; use these features directly rather than polyfilling or reimplementing in script.
+
+Reach for platform CSS before JS equivalents:
+
+| Capability | Prefer | Over |
+|------------|--------|------|
+| Anchor-linked positioning | `anchor-name`, `position-anchor`, `position-area`, `anchor-default` | Manual `top`/`left` from `getBoundingClientRect` |
+| Nested grid alignment | `grid-template-columns: subgrid` (and rows) | Measuring children to sync tracks |
+| Responsive component layout | `@container` / container query units (`cqw`, `cqi`) | ResizeObserver + breakpoint state |
+| Entry / exit motion | `@starting-style`, `transition-behavior: allow-discrete` | Mount/unmount animation libraries |
+| Scroll-linked effects | `animation-timeline: scroll()`, `scroll()` | Scroll listeners updating styles |
+| Page / shared-element motion | `view-transition-name`, View Transitions API | FLIP layout JS |
+| Intrinsic control sizing | `field-sizing: content` | Auto-resize textarea scripts |
+| Color & theme mixing | `color-mix()`, `light-dark()` | Hardcoded light/dark duplicates |
+
+This list is illustrative — adopt other **standard, evergreen** CSS/HTML platform features the same way. When support is uneven, layer a minimal fallback (simpler layout, reduced motion) rather than blocking on a JS shim.
+
+### Component wrappers
+
+React components should be **thin adapters**: render correct semantic markup, map props to `data-*`/native attributes, and add JS only where the platform falls short. When JS is required, keep it framework-agnostic in `{name}.utils.ts` so the same rules apply in other runtimes.
+
+## Colors & tokens
+
+**Palette** (`@spiffdog-design/atlas-colors`) — raw scales as `--{palette}{step}` (e.g. `--gray9`, `--blue8`). See `packages/atlas-colors/src/palette.ts` or Storybook **atlas colors** stories.
+
+```css
+@import "@spiffdog-design/atlas-colors/index.css";
+```
+
+```ts
+import { palette } from "@spiffdog-design/atlas-colors";
+const primary = palette.blue[9];
+```
+
+**Semantic tokens** (`styles/tokens.css`) — map palette to intent (`--color-bg`, `--color-text`, `--color-primary`, etc.). Components use `--color-*`, not raw palette steps.
+
+**Theming**: atlas-colors sets `color-scheme: light dark` on `:root`. Force appearance via `document.documentElement.style.colorScheme`.
+
+**Rem scale**: `html { font-size: 62.5%; }` in `globals.css` → **1rem = 10px**.
+
+| Token | rem | px |
+|-------|-----|-----|
+| `--space-0-5` | 0.125rem | 1.25px |
+| `--space-1` | 0.25rem | 2.5px |
+| `--space-2` | 0.5rem | 5px |
+| `--space-3` | 0.75rem | 7.5px |
+| `--space-4` | 1rem | 10px |
+| `--space-5` | 1.25rem | 12.5px |
+| `--space-6` | 1.5rem | 15px |
+| `--space-8` | 2rem | 20px |
+
+Token categories in `tokens.css`: `--space-*`, `--control-height-*`, `--font-size-*`, `--radius-*`, `--color-*`, `--focus-ring`.
+
+- Padding/margin/gap → `--space-*`; colors → `--color-*`; radius → `--radius-*`
+- **OK to hardcode**: `1px` borders, `2px` outline width, `999px` pill radius, `0`/`100%`/`fit-content`, `@layer vendor` overrides
+- **Do not** duplicate token values as literals — add to `tokens.css` when reused or design-intent
+
+## Storybook
+
+- `npm run dev` from repo root or `apps/docs`
+- Story titles: `atlas components/{Name}`, `atlas colors/{Name}`
+- Preview imports `@spiffdog-design/atlas-components/styles/index.css`
+
+## Pure logic & testing
+
+Extract anything testable without React or the DOM into `{name}.utils.ts`:
+
+- Validation, defaults, type guards, formatters, mappers, computed constants
+
+Keep in `index.tsx`: JSX, hooks, component state, and thin handlers that call utils.
+
+**Unit tests are required.** Add `{name}.test.ts` (Vitest) covering every export from `{name}.utils.ts`. Do not skip because logic "looks small" — extract first, then test.
+
+```typescript
+// button.utils.ts
+export function getButtonLabel(name: string) { return `Hello from ${name}`; }
+
+// button.test.ts
+import { describe, expect, it } from "vitest";
+import { getButtonLabel } from "./button.utils.js";
+
+describe("getButtonLabel", () => {
+  it("includes the app name", () => {
+    expect(getButtonLabel("Atlas")).toBe("Hello from Atlas");
+  });
+});
+```
+
+Also required for every shared component: `*.stories.tsx`. Optional: `*.test.tsx` for render/a11y tests with Testing Library.
+
+## Do not
+
+- Add Tailwind or utility-first CSS frameworks
+- Put variant styles in global CSS or inline styles
+- Hardcode spacing/sizing/color/radius when a token exists
+- Skip stories or `{name}.test.ts` for new shared components
+- Inline testable logic in `index.tsx` instead of `{name}.utils.ts`
+- Use `@mui/base` (deprecated) — use `@base-ui/react`
+- Reimplement in JS what native HTML/CSS already provides (e.g. visibility toggles, basic disclosure, form validity styling, overlay positioning, subgrid alignment)
+- Put primary interaction or visual state only in React handlers/state when equivalent `data-*`, attributes, or pseudo-classes would work
+- Use non-semantic elements (`div`, `span`) as interactive controls when a native element exists

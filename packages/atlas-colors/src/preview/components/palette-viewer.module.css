@@ -1,0 +1,17 @@
+.root {
+  font-family: sans-serif;
+}
+
+.title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.swatches {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: flex-start;
+  padding: 8px;
+}

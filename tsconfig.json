@@ -1,0 +1,7 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/atlas-components" },
+    { "path": "./apps/docs" }
+  ]
+}
