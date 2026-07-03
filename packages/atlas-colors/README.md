@@ -31,6 +31,14 @@ import { palette } from "@spiffdog-design/atlas-colors";
 const primary = palette.blue[9];
 ```
 
+## Token usage
+
+`@spiffdog-design/atlas-colors` exposes raw palette variables such as `--blue6`, `--red6`, `--green6`, and `--amber6`.
+
+These palette tokens are consumed by semantic Atlas component tokens such as `--color-primary`, `--color-success`, `--color-warning`, `--color-error`, and their hover variants like `--color-primary-hover`.
+
+This separation means components can rely on semantically named tokens while the color system remains driven by the OKLab palette.
+
 `palette` is a typed `Theme` object in [`src/palette.ts`](src/palette.ts). Each leaf is a CSS color string suitable for `color`, `background`, and other properties.
 
 ## Structure

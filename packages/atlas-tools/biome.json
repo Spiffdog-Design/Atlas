@@ -1,0 +1,7 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.2/schema.json",
+  "root": false,
+  "extends": [
+    "@spiffdog-design/biome-config/base"
+  ]
+}

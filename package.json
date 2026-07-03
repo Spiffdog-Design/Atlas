@@ -21,7 +21,7 @@
   "devEngines": {
     "packageManager": {
       "name": "npm",
-      "version": "11.6.2"
+      "version": "11.12.1"
     }
   },
   "workspaces": [
@@ -30,12 +30,13 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:packages": "turbo run build --filter=@spiffdog-design/atlas-*",
     "build:docs": "turbo run build --filter=docs",
+    "build:packages": "turbo run build --filter=@spiffdog-design/atlas-*",
+    "check-types": "turbo run check-types",
     "dev": "turbo run dev --filter=docs --filter=@spiffdog-design/atlas-*",
-    "lint": "turbo run lint",
     "format": "biome check --write .",
-    "check-types": "turbo run check-types"
+    "lint": "turbo run lint",
+    "test": "npx turbo run test --filter=@spiffdog-design/atlas-*"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.2",

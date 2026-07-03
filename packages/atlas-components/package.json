@@ -26,6 +26,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node ./scripts/copy-styles.js",
     "dev": "tsc -p tsconfig.build.json --watch",
+    "test": "vitest run",
     "lint": "biome ci .",
     "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
@@ -35,12 +36,17 @@
     "@spiffdog-design/biome-config": "*",
     "@spiffdog-design/typescript-config": "*",
     "@storybook/react": "^8.6.18",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
-    "typescript": "5.9.2"
+    "jsdom": "^29.1.1",
+    "typescript": "5.9.2",
+    "vitest": "^3.2.6"
   },
   "dependencies": {
+    "@spiffdog-design/atlas-tools": "*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

@@ -1,0 +1,38 @@
+{
+  "name": "@spiffdog-design/atlas-tools",
+  "version": "0.0.0",
+  "description": "Atlas Design System utility helpers for data types.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/types/*.d.ts",
+      "import": "./dist/*.mjs",
+      "require": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "lint": "biome ci .",
+    "check-types": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@spiffdog-design/biome-config": "*",
+    "@spiffdog-design/typescript-config": "*",
+    "@types/node": "^22.15.3",
+    "typescript": "5.9.2",
+    "vitest": "^3.2.6"
+  }
+}

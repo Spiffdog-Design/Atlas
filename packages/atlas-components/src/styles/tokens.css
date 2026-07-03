@@ -25,7 +25,11 @@
     --color-error-text: var(--red1);
     --color-error-border: var(--red7);
     --color-success: var(--green6);
+    --color-success-hover: var(--green7);
+    --color-success-text: var(--gray12);
     --color-warning: var(--amber6);
+    --color-warning-hover: var(--amber7);
+    --color-warning-text: var(--gray12);
     --color-focus-ring: var(--blue8);
 
     --opacity-disabled: 0.4;

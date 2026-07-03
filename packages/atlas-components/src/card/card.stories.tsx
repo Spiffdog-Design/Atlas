@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Card } from "./index.js";
+import { Card } from "./";
 
 const meta = {
   title: "atlas components/Card",

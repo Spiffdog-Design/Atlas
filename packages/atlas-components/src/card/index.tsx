@@ -1,4 +1,5 @@
 import { type JSX } from "react";
+import styles from "./card.module.css";
 
 export function Card({
   className,
@@ -13,8 +14,8 @@ export function Card({
 }): JSX.Element {
   return (
     <a
-      className={className}
-      href={`${href}?utm_source=create-turbo&utm_medium=basic&utm_campaign=create-turbo"`}
+      className={className ? `${styles.card} ${className}` : styles.card}
+      href={`${href}?utm_source=create-turbo&utm_medium=basic&utm_campaign=create-turbo`}
       rel="noopener noreferrer"
       target="_blank"
     >

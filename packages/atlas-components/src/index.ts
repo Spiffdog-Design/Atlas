@@ -1,3 +1,8 @@
-export { Button, type ButtonProps } from "./button/index.js";
-export { Card } from "./card/index.js";
-export { Code } from "./code/index.js";
+export { Button, type ButtonProps } from "./button";
+export { Card } from "./card";
+export { Code } from "./code";
+export { Checkbox, type CheckboxProps } from "./checkbox";
+export { Input, type InputProps } from "./input";
+export { Slider, type SliderProps } from "./slider";
+export { ProgressBar, type ProgressBarProps } from "./progressbar";
+export { Select, type SelectProps } from "./select";

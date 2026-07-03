@@ -17,6 +17,7 @@ apps/docs/
 Stories for components and colors are colocated with their source packages, not in this app:
 
 - `packages/atlas-components/src/<component>/*.stories.tsx`
+- `packages/atlas-components/src/components.stories.tsx`
 - `packages/atlas-colors/src/preview/*.stories.tsx`
 
 ## Scripts

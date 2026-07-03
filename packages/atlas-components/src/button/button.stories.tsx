@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "./index.js";
+import { Button } from "./";
 
 const meta = {
   title: "atlas components/Button",
   component: Button,
   args: {
-    appName: "Atlas",
-    children: "Click me",
+    children: "Save changes",
   },
 } satisfies Meta<typeof Button>;
 
@@ -16,8 +15,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const WithCustomLabel: Story = {
+export const Primary: Story = {
   args: {
-    children: "Save changes",
+    appearance: "primary",
+    variant: "solid",
+  },
+};
+
+export const AlertOutline: Story = {
+  args: {
+    appearance: "alert",
+    variant: "outline",
+    rounded: true,
+    children: "Delete",
   },
 };

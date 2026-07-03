@@ -40,6 +40,7 @@ atlas/
 | `docs` | [apps/docs/README.md](apps/docs/README.md) |
 | `@spiffdog-design/atlas-colors` | [packages/atlas-colors/README.md](packages/atlas-colors/README.md) |
 | `@spiffdog-design/atlas-components` | [packages/atlas-components/README.md](packages/atlas-components/README.md) |
+| `@spiffdog-design/atlas-tools` | [packages/atlas-tools/README.md](packages/atlas-tools/README.md) |
 | `@spiffdog-design/biome-config` | [packages/biome-config/README.md](packages/biome-config/README.md) |
 | `@spiffdog-design/typescript-config` | [packages/typescript-config/README.md](packages/typescript-config/README.md) |
 
@@ -56,6 +57,15 @@ Run from the repository root:
 | `npm run lint` | Biome check across the monorepo |
 | `npm run format` | Biome check with auto-fix |
 | `npm run check-types` | TypeScript `--noEmit` in all workspaces |
+| `npx turbo run test --filter=@spiffdog-design/atlas-*` | Run tests across Atlas workspace packages |
+
+## Recent updates
+
+- Added form and input primitives in `@spiffdog-design/atlas-components`: `Checkbox`, `Input`, `Select`, `Slider`, and `ProgressBar`.
+- Added a combined component set Storybook example at `packages/atlas-components/src/components.stories.tsx`.
+- Added a Turbo `test` task in `turbo.json` so `npx turbo run test --filter=@spiffdog-design/atlas-*` works.
+- Added semantic hover tokens in `packages/atlas-components/src/styles/tokens.css`, including `--color-primary-hover`, `--color-success-hover`, `--color-warning-hover`, and `--color-error-hover`.
+- Updated package documentation and exports for the new components.
 
 Filter Turborepo tasks to a single workspace:
 
@@ -71,7 +81,7 @@ npm install @spiffdog-design/atlas-colors @spiffdog-design/atlas-components
 ```
 
 ```ts
-import { Button } from "@spiffdog-design/atlas-components";
+import { Button, Card, Code, Checkbox, Input, Select, Slider, ProgressBar } from "@spiffdog-design/atlas-components";
 import { palette } from "@spiffdog-design/atlas-colors";
 import "@spiffdog-design/atlas-colors/index.css";
 import "@spiffdog-design/atlas-components/styles.css";

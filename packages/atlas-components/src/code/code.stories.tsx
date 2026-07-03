@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Code } from "./index.js";
+import { Code } from "./";
 
 const meta = {
   title: "atlas components/Code",
