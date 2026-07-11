@@ -22,7 +22,7 @@
     --color-secondary-border: transparent;
     --color-error: var(--red6);
     --color-error-hover: var(--red7);
-    --color-error-text: var(--red1);
+    --color-error-text: var(--gray12);
     --color-error-border: var(--red7);
     --color-success: var(--green6);
     --color-success-hover: var(--green7);
@@ -76,6 +76,8 @@
     /* Interaction */
     --transition-base:
       background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-      box-shadow 0.15s ease-in-out, color 0.15s ease-in-out;
+      box-shadow 0.15s ease-in-out, color 0.15s ease-in-out, transform 0.15s ease-in-out;
+    --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-raised: 0 2px 4px rgba(0, 0, 0, 0.08);
   }
 }
