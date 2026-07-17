@@ -1,7 +1,6 @@
 @layer components {
   .card {
     display: block;
-    width: 100%;
     padding: var(--space-5);
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border-subtle);
@@ -10,12 +9,6 @@
     box-shadow: var(--shadow-subtle);
     text-decoration: none;
     transition: var(--transition-base);
-  }
-
-  .card:hover {
-    background: var(--color-surface-hover);
-    border-color: var(--color-border);
-    box-shadow: var(--shadow-raised);
   }
 
   .card h2 {

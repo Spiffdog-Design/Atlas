@@ -1,45 +1,46 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes } from "react";
 
-import { buildButtonDataAttributes, type ButtonAppearance, type ButtonVariant } from "./button.utils";
+import {
+  normalizeButtonAppearance,
+  normalizeButtonVariant,
+  type ButtonAppearance,
+  type ButtonVariant,
+} from "./button.utils";
 
 import styles from "./button.module.css";
 
-export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
-  children: ReactNode;
-  className?: string;
-  appName?: string;
+const buildDataAttributes = (attributes: Record<string, unknown>) =>
+  Object.fromEntries(
+    Object.entries(attributes).map(([key, value]) => [`data-${key}`, value])
+  ) as Record<string, string | boolean>;
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   appearance?: ButtonAppearance;
   variant?: ButtonVariant;
   rounded?: boolean;
 }
 
-export const Button = ({
+export function Button({
   children,
   className,
-  appName,
   appearance = "base",
   variant = "solid",
   rounded = false,
   disabled = false,
-  type = "button",
-  onClick,
   ...props
-}: ButtonProps) => {
-  const dataAttributes = buildButtonDataAttributes({
-    appearance,
-    variant,
+}: ButtonProps) {
+  const classes = className ? `${styles.button} ${className}` : styles.button;
+  const dataAttributes = buildDataAttributes({
+    appearance: normalizeButtonAppearance(appearance),
+    variant: normalizeButtonVariant(variant),
     rounded,
-    disabled,
+    ...(disabled ? { disabled: true } : {}),
   });
-
-  const handleClick = onClick ?? (appName ? () => alert(`Hello from your ${appName} app!`) : undefined);
-
+  
   return (
     <button
-      className={className ? `${styles.button} ${className}` : styles.button}
+      className={classes}
       disabled={disabled}
-      type={type}
-      onClick={handleClick}
       {...dataAttributes}
       {...props}
     >

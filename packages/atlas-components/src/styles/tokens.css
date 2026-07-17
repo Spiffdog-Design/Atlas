@@ -12,6 +12,11 @@
     --color-border-subtle: var(--gray8);
     --color-text: var(--gray1);
     --color-text-muted: var(--gray3);
+    --color-surface: var(--gray12);
+    --color-surface-hover: var(--gray11);
+    --color-base: var(--gray5);
+    --color-base-hover: var(--gray7);
+    --color-base-text: var(--gray12);
     --color-primary: var(--blue6);
     --color-primary-hover: var(--blue4);
     --color-primary-text: var(--gray12);

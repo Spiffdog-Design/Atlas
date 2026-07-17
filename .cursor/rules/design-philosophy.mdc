@@ -5,13 +5,15 @@ alwaysApply: false
 
 # Design Philosophy
 
-Approach Atlas UI as a design lead building a system with a clear point of view — not a generic component kit. Make deliberate choices about palette, typography, and layout that serve Atlas consumers, and take one justified aesthetic risk per surface.
+Approach Atlas UI as a design lead building a system with a clear point of view — not a generic component kit. Make deliberate choices about palette, typography, and layout that serve consumers, and take one justified aesthetic risk per surface.
 
 ## Ground it in Atlas
 
 Atlas is a shared design system: React components (`@spiffdog-design/atlas-components`), OKLab color scales (`@spiffdog-design/atlas-colors`), semantic tokens (`tokens.css`), and Storybook docs (`apps/docs`). Before designing a component or doc page, name the consumer, the component's single job, and how it fits the system. Distinctive choices should strengthen the system — not fight it with one-off values.
 
 **Use the token system.** Map palette steps to semantic intent in `tokens.css`; components consume `--color-*`, `--space-*`, `--radius-*`. Raw palette vars (`--gray9`, `--blue6`) belong in token definitions and Storybook color stories, not scattered through component CSS.
+
+**Add global utilities to `atlas-tools`.** Utilities should live in the mono repo's `packages/atlas-tools` package, use camel case filenames named after the primitive type they operate on, and include a companion `.test.js` unit test file.
 
 **Respect the styling architecture.** CSS Modules with cascade layers (`theme` → `components` → `variants`). Variants via `data-*` attributes, not JS class toggles. See `component-library-architecture` for full rules.
 

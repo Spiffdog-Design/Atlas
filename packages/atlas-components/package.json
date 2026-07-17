@@ -29,7 +29,7 @@
     "test": "vitest run",
     "lint": "biome ci .",
     "generate:component": "turbo gen react-component",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc -p tsconfig.build.json --noEmit"
   },
   "devDependencies": {
     "@spiffdog-design/atlas-colors": "*",

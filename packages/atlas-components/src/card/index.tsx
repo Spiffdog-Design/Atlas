@@ -1,29 +1,26 @@
-import { type JSX } from "react";
+import { HTMLAttributes, type JSX } from "react";
 import styles from "./card.module.css";
 
+export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  title: string;
+}
+
 export function Card({
+  children,
   className,
   title,
-  children,
-  href,
-}: {
-  className?: string;
-  title: string;
-  children: React.ReactNode;
-  href: string;
-}): JSX.Element {
+  ...props
+}: CardProps) {
+  const classes = className ? `${styles.card} ${className}` : styles.card
+
   return (
-    <a
-      className={className ? `${styles.card} ${className}` : styles.card}
-      href={`${href}?utm_source=create-turbo&utm_medium=basic&utm_campaign=create-turbo`}
-      rel="noopener noreferrer"
-      target="_blank"
+    <div
+      className={classes}
+      {...props}
     >
-      <h2>
-        {title} <span>-&gt;</span>
-      </h2>
+      <h2>{title}</h2>
       <p>{children}</p>
-    </a>
+    </div>
   );
 }
 

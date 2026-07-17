@@ -1,10 +1,10 @@
 @layer components {
   .button {
     appearance: none;
-    background-color: var(--color-surface);
+    background-color: var(--color-base);
     border: none;
     border-radius: var(--radius-md);
-    color: var(--color-text);
+    color: var(--color-base-text);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -21,7 +21,7 @@
 
 @layer variants {
   .button:hover {
-    background-color: var(--color-surface-hover);
+    background-color: var(--color-base-hover);
   }
 
   .button:focus-visible {
@@ -169,17 +169,6 @@
 
   .button[data-appearance="warning"]:hover {
     background-color: var(--color-warning-hover);
-  }
-
-  .button[data-appearance="base"]:not([data-variant="outline"]):not([data-variant="basic"]) {
-    background-color: transparent;
-    color: var(--color-text);
-    box-shadow: none;
-  }
-
-  .button[data-appearance="base"]:not([data-variant="outline"]):not([data-variant="basic"]):hover {
-    background-color: color-mix(in srgb, var(--color-text) 12%, transparent);
-    box-shadow: none;
   }
 
   .button[data-disabled] {

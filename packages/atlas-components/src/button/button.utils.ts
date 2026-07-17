@@ -1,3 +1,5 @@
+import { normalizeValue } from "@spiffdog-design/atlas-tools";
+
 export type ButtonAppearance = "alert" | "base" | "primary" | "success" | "warning";
 export type ButtonVariant = "basic" | "solid" | "outline";
 
@@ -8,28 +10,22 @@ export interface ButtonDataAttributesOptions {
   disabled?: boolean;
 }
 
+export function normalizeButtonOption<T>(
+  value: T | undefined,
+  fallback: T,
+): T {
+  return normalizeValue(value, fallback);
+}
+
 export function normalizeButtonAppearance(
   appearance?: ButtonAppearance,
 ): ButtonAppearance {
-  return appearance ?? "base";
+  return normalizeButtonOption(appearance, "base");
 }
 
 export function normalizeButtonVariant(
   variant?: ButtonVariant,
 ): ButtonVariant {
-  return variant ?? "solid";
+  return normalizeButtonOption(variant, "solid");
 }
 
-export function buildButtonDataAttributes({
-  appearance,
-  variant,
-  rounded = false,
-  disabled = false,
-}: ButtonDataAttributesOptions) {
-  return {
-    "data-appearance": normalizeButtonAppearance(appearance),
-    "data-variant": normalizeButtonVariant(variant),
-    "data-rounded": rounded ? "true" : "false",
-    ...(disabled ? { "data-disabled": "true" } : {}),
-  } as const;
-}

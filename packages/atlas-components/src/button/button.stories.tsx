@@ -5,7 +5,11 @@ const meta = {
   title: "atlas components/Button",
   component: Button,
   args: {
-    children: "Save changes",
+    appearance: "primary",
+    children: "Click Me",
+    disabled: false,
+    rounded: false,
+    variant: "solid",
   },
 } satisfies Meta<typeof Button>;
 
@@ -15,18 +19,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const Primary: Story = {
-  args: {
-    appearance: "primary",
-    variant: "solid",
-  },
-};
-
-export const AlertOutline: Story = {
+export const Alert: Story = {
   args: {
     appearance: "alert",
-    variant: "outline",
-    rounded: true,
+    variant: "basic",
     children: "Delete",
   },
 };
