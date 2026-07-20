@@ -112,6 +112,10 @@ const config: StorybookConfig = {
             replacement: join(atlasColorsDist, "index.css"),
           },
           {
+            find: "@spiffdog-design/atlas-tools",
+            replacement: join(__dirname, "../../../packages/atlas-tools/src/index.ts"),
+          },
+          {
             find: "@spiffdog-design/atlas-components",
             replacement: join(__dirname, "../../../packages/atlas-components/src"),
           },

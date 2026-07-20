@@ -12,7 +12,6 @@
   }
 
   .input {
-    width: 100%;
     min-height: var(--control-height-md);
     padding: 0 var(--space-4);
     border: 1px solid var(--color-border);
