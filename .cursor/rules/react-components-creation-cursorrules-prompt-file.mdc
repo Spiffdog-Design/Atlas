@@ -1,0 +1,37 @@
+---
+description: "Cursor rules for React component creation and development."
+globs: **/*
+alwaysApply: false
+---
+# Cursor Rules
+
+## Whenever you need a React component
+
+1. Carefully consider the component's purpose, functionality, and design
+
+2. Prefer native HTML and CSS behaviors.  Lightly augment with Javascript to fill functionality gaps.
+    - Prefer data attributes for styling (e.g.  `data-variant="basic"`, `"data-rounded="true"`)
+    - Data attributes only mirror styling props.  They do not mirror user input or other data.
+
+3. Think slowly, step by step, and outline your reasoning
+
+4. Check if a similar component already exists in any of the following locations
+   - packages/atlas-components/src
+
+5. If it doesn't exist, generate a detailed prompt for the component, including:
+   - Component name and purpose
+   - Desired props and their types
+   - Any specific styling or behavior requirements
+   - Request for TypeScript usage
+
+6. URL encode the prompt.
+
+7. After generating, adapt the component to fit our project structure:
+   - Import
+     - common utilities from packages/atlas-tools
+     - color palette from packages/atlas-colors
+   - Ensure it follows our existing component patterns
+   - Add any necessary custom logic or state management
+
+Example prompt template:
+"Create a React component named {ComponentName} using TypeScript. It should {description of functionality}. Props should include {list of props with types}. The component should {any specific styling or behavior notes}. Please provide the full component code."

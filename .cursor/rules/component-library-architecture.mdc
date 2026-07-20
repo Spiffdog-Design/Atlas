@@ -13,6 +13,7 @@ Atlas Design System monorepo. **CSS Modules only** — no Tailwind.
 - Turborepo workspaces: `apps/*`, `packages/*`
 - Colors: `@spiffdog-design/atlas-colors` (OKLab palette scales with `light-dark()`)
 - Components: `@spiffdog-design/atlas-components`
+- Utilities: `@spiffdog-design/atlas-tools`
 - Docs: Storybook in `apps/docs` (stories colocated in `packages/atlas-components/src` and `packages/atlas-colors/src/preview`)
 - Headless UI (when native HTML/CSS is insufficient): `@base-ui/react` — behavior/a11y only; never reimplement dialogs, menus, focus traps
 - Tests: Vitest + Testing Library; Storybook for all shared components
@@ -36,6 +37,8 @@ packages/
       styles/                    # index.css, tokens.css, globals.css, component.module.template.css
       button/                    # Per-component folder (organize by type as library grows)
       index.ts
+  atlas-tools/                   # Global utilities and helpers
+    src/
   biome-config/
   typescript-config/
 ```
