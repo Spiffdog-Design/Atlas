@@ -1,4 +1,13 @@
-export * from "./array";
-export * from "./element-data-attributes";
-export * from "./object";
-export * from "./string";
+export {
+  buildDataAttributes,
+  capitalize,
+  chunk,
+  deepMerge,
+  getSearchParam,
+  normalizeValue,
+  parseQueryValue,
+  serializeQueryValue,
+  setSearchParam,
+  trimLines,
+  unique,
+} from "./utilities/index.js";

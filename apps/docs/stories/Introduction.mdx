@@ -17,6 +17,9 @@ and shared React components used across Atlas applications.
   atlas-colors and maps palette steps to semantic tokens (`--color-bg`, `--color-primary`,
   `--space-*`, etc.) in `tokens.css`. See
   [Components](./?path=/docs/atlas-components-overview--docs) for usage and styling conventions.
+- **@spiffdog-design/atlas-tools** — Pure utilities in `utilities/` and React hooks in `hooks/`.
+  Includes `useUrlQuery` for URL-persisted UI state (native browser, React Router, TanStack Router).
+  Prefer subpath imports (e.g. `@spiffdog-design/atlas-tools/hooks/use-url-query`) for tree-shaking.
 
 ## Development
 

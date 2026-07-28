@@ -1,0 +1,51 @@
+---
+description: Keep README and Storybook docs updated when accepted changes or completed plans ship
+alwaysApply: true
+---
+
+# Documentation sync on completed work
+
+When the user **accepts changes** or a **plan is completed/executed**, update project documentation in the same turn so docs match the new reality. Do not leave README or guides stale.
+
+## Atlas documentation map
+
+| Area | Primary docs | When to update |
+|------|--------------|----------------|
+| **Repo overview** | [`README.md`](../../README.md) | New packages, script changes, monorepo structure |
+| **Storybook app** | [`apps/docs/README.md`](../../apps/docs/README.md), [`apps/docs/stories/Introduction.mdx`](../../apps/docs/stories/Introduction.mdx) | New packages in docs, dev workflow changes |
+| **Components** | Colocated `{name}.stories.tsx`; [`packages/atlas-components/README.md`](../../packages/atlas-components/README.md) | Every new/changed component; README on structural changes |
+| **Utilities** | TSDoc on exports in `packages/atlas-tools/src/utilities/`; utilities table in atlas-tools README | Every new/changed utility; README when export map changes |
+| **Hooks** | TSDoc on hook + provider in `packages/atlas-tools/src/hooks/`; hooks section in atlas-tools README | Every new/changed hook; document subpath imports and peer deps |
+| **Colors / tokens** | [`packages/atlas-colors/README.md`](../../packages/atlas-colors/README.md); Storybook preview stories | Palette or CSS export changes |
+| **Architecture / conventions** | `.cursor/rules/component-library-architecture.mdc`, `package-exports-tree-shaking.mdc` | Styling, testing, export, or platform conventions change |
+
+## Required documentation per artifact
+
+| Artifact | Required | Location |
+|----------|----------|----------|
+| Shared component | Storybook story | `packages/atlas-components/src/{name}/{name}.stories.tsx` |
+| Component utils | Vitest tests | `{name}.utils.ts` + `{name}.test.ts` |
+| Utility module | TSDoc on every export + Vitest | `packages/atlas-tools/src/utilities/{module}.ts` + `.test.ts` |
+| Hook | TSDoc on hook, provider, options + tests | `packages/atlas-tools/src/hooks/{name}/` + README hooks table |
+
+## Structural vs. implementation detail
+
+**Update READMEs and Storybook MDX for structural changes:**
+
+- Project layout, build/deploy flow, export maps, new packages/modules
+- Tooling, scripts, dependencies, or workflows that affect how developers run or ship
+
+**Do not update READMEs for routine implementation detail** — prefer inline docs:
+
+- TSDoc/JSDoc on exported functions, hooks, and types
+- Storybook `parameters.docs.description` for component behavior
+- Vitest tests as executable behavior documentation
+
+Skip doc edits for tiny fixes with no user-facing or workflow impact (typos, pure refactors, internal renames with no doc mentions).
+
+## How to update
+
+- Prefer **surgical edits** — fix outdated commands, versions, and links
+- Mirror script names exactly as in the relevant `package.json`
+- Do not invent features; document what was actually shipped
+- Keep README workspace tables and Introduction.mdx package lists in sync

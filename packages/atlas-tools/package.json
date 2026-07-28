@@ -1,7 +1,8 @@
 {
   "name": "@spiffdog-design/atlas-tools",
   "version": "0.0.0",
-  "description": "Atlas Design System utility helpers for data types.",
+  "description": "Atlas Design System utilities and React hooks.",
+  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -12,13 +13,51 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js"
     },
-    "./*": {
-      "types": "./dist/types/*.d.ts",
-      "import": "./dist/*.js",
-      "require": "./dist/*.js"
+    "./utilities": {
+      "types": "./dist/types/utilities/index.d.ts",
+      "import": "./dist/utilities/index.js"
+    },
+    "./utilities/array": {
+      "types": "./dist/types/utilities/array.d.ts",
+      "import": "./dist/utilities/array.js"
+    },
+    "./utilities/string": {
+      "types": "./dist/types/utilities/string.d.ts",
+      "import": "./dist/utilities/string.js"
+    },
+    "./utilities/object": {
+      "types": "./dist/types/utilities/object.d.ts",
+      "import": "./dist/utilities/object.js"
+    },
+    "./utilities/element-data-attributes": {
+      "types": "./dist/types/utilities/element-data-attributes.d.ts",
+      "import": "./dist/utilities/element-data-attributes.js"
+    },
+    "./utilities/url-query": {
+      "types": "./dist/types/utilities/urlQuery.utils.d.ts",
+      "import": "./dist/utilities/urlQuery.utils.js"
+    },
+    "./hooks": {
+      "types": "./dist/types/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js"
+    },
+    "./hooks/use-url-query": {
+      "types": "./dist/types/hooks/useUrlQuery/index.d.ts",
+      "import": "./dist/hooks/useUrlQuery/index.js"
+    },
+    "./hooks/use-url-query/native-router": {
+      "types": "./dist/types/hooks/useUrlQuery/native-router/index.d.ts",
+      "import": "./dist/hooks/useUrlQuery/native-router/index.js"
+    },
+    "./hooks/use-url-query/react-router": {
+      "types": "./dist/types/hooks/useUrlQuery/react-router/index.d.ts",
+      "import": "./dist/hooks/useUrlQuery/react-router/index.js"
+    },
+    "./hooks/use-url-query/tanstack-router": {
+      "types": "./dist/types/hooks/useUrlQuery/tanstack-router/index.d.ts",
+      "import": "./dist/hooks/useUrlQuery/tanstack-router/index.js"
     }
   },
   "scripts": {
@@ -28,10 +67,29 @@
     "check-types": "tsc --noEmit",
     "test": "vitest run"
   },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-router-dom": ">=6",
+    "@tanstack/react-router": ">=1"
+  },
+  "peerDependenciesMeta": {
+    "react-router-dom": {
+      "optional": true
+    },
+    "@tanstack/react-router": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@spiffdog-design/biome-config": "*",
     "@spiffdog-design/typescript-config": "*",
+    "@tanstack/react-router": "^1.121.0",
     "@types/node": "^22.15.3",
+    "@types/react": "19.2.2",
+    "jsdom": "^29.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.6.2",
     "typescript": "5.9.2",
     "vitest": "^3.2.6"
   }

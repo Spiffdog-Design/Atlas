@@ -2,6 +2,7 @@
   "name": "@spiffdog-design/atlas-colors",
   "version": "0.0.0",
   "description": "Atlas Design System color palette (OKLab tokens and CSS custom properties)",
+  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/types/index.d.ts",

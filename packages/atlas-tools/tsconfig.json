@@ -1,0 +1,7 @@
+{
+  "extends": "@spiffdog-design/typescript-config/react-library.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src", "src/types/optional-peers.d.ts"]
+}

@@ -13,7 +13,7 @@ Atlas is a shared design system: React components (`@spiffdog-design/atlas-compo
 
 **Use the token system.** Map palette steps to semantic intent in `tokens.css`; components consume `--color-*`, `--space-*`, `--radius-*`. Raw palette vars (`--gray9`, `--blue6`) belong in token definitions and Storybook color stories, not scattered through component CSS.
 
-**Add global utilities to `atlas-tools`.** Utilities should live in the mono repo's `packages/atlas-tools` package, use camel case filenames named after the primitive type they operate on, and include a companion `.test.js` unit test file.
+**Add global utilities and hooks to `atlas-tools`.** Pure helpers live in `packages/atlas-tools/src/utilities/`; React hooks in `src/hooks/`. Use camelCase filenames, companion `.test.ts` files, TSDoc on exports, and tree-shakeable subpath imports (see `package-exports-tree-shaking`). Document hooks in the atlas-tools README.
 
 **Respect the styling architecture.** CSS Modules with cascade layers (`theme` → `components` → `variants`). Variants via `data-*` attributes, not JS class toggles. See `component-library-architecture` for full rules.
 
@@ -29,7 +29,7 @@ Use motion deliberately: load sequences, hover micro-interactions, focus transit
 
 Match complexity to the vision. Maximalist directions need elaborate execution; minimal directions need precision in spacing, type, and detail.
 
-Consider copy carefully. Placeholder text in stories and MDX should read like real UI copy, not lorem ipsum boilerplate.
+Consider copy carefully. Placeholder text in stories and MDX should read like real UI copy, not lorem ipsum boilerplate. See `update-docs-on-completed-work` for where to document shipped work.
 
 ## Process: plan, critique, build
 

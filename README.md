@@ -27,6 +27,7 @@ atlas/
 ├── packages/
 │   ├── atlas-colors/      # OKLab palette tokens
 │   ├── atlas-components/  # React component library
+│   ├── atlas-tools/       # Utilities (utilities/) and hooks (hooks/)
 │   ├── biome-config/      # Shared Biome presets
 │   └── typescript-config/ # Shared tsconfig bases
 ├── turbo.json
@@ -61,11 +62,10 @@ Run from the repository root:
 
 ## Recent updates
 
+- Reorganized `@spiffdog-design/atlas-tools` into `utilities/` and `hooks/` with tree-shakeable subpath exports.
+- Added `useUrlQuery` hook for URL-persisted UI state (native, React Router, TanStack Router providers).
+- Expanded component library architecture, package export, and documentation-sync Cursor rules.
 - Added form and input primitives in `@spiffdog-design/atlas-components`: `Checkbox`, `Input`, `Select`, `Slider`, and `ProgressBar`.
-- Added a combined component set Storybook example at `packages/atlas-components/src/components.stories.tsx`.
-- Added a Turbo `test` task in `turbo.json` so `npx turbo run test --filter=@spiffdog-design/atlas-*` works.
-- Added semantic hover tokens in `packages/atlas-components/src/styles/tokens.css`, including `--color-primary-hover`, `--color-success-hover`, `--color-warning-hover`, and `--color-error-hover`.
-- Updated package documentation and exports for the new components.
 
 Filter Turborepo tasks to a single workspace:
 
