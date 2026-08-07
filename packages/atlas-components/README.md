@@ -18,11 +18,13 @@ import "@spiffdog-design/atlas-colors/index.css";
 import "@spiffdog-design/atlas-components/styles.css";
 ```
 
-Subpath imports are supported for tree-shaking:
+Subpath imports are supported for tree-shaking (preferred over the root barrel):
 
 ```ts
 import { Button } from "@spiffdog-design/atlas-components/button";
 ```
+
+Explicit export paths: `./button`, `./card`, `./code`, `./checkbox`, `./input`, `./slider`, `./progressbar`, `./select`, `./styles.css`.
 
 ## Structure
 

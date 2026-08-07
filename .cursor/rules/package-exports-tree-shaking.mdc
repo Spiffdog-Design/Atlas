@@ -1,0 +1,45 @@
+---
+description: Tree-shakeable package exports — barrels, subpaths, sideEffects, and build output for all packages/*
+globs: packages/**/*
+alwaysApply: false
+---
+
+# Package exports and tree-shaking
+
+Apply to every **publishable** package under `packages/` (`atlas-tools`, `atlas-components`, `atlas-colors`). Config-only packages (`biome-config`, `typescript-config`) are exempt.
+
+## Before adding a public export
+
+1. Add an explicit `exports` subpath in `package.json` — never rely on deep `node_modules` paths alone.
+2. Emit **one ESM file per source module** (`tsc` with `rootDir`/`outDir`, or Rollup `preserveModules: true`). Do not ship monolithic JS bundles for multi-export libraries.
+3. Set `"type": "module"` and `"sideEffects": false` unless the package has CSS/assets — then list side-effect globs explicitly (see atlas-components).
+
+## Barrel files
+
+- **Named re-exports only** — `export { chunk } from "./array.js"`, not `export *`.
+- **No top-level statements** — barrels are re-export-only; no init code, logging, or side effects.
+- **Do not mix concerns** — never re-export React hooks from utility root entries; keep hooks under `./hooks/*`.
+
+## Optional peer dependencies
+
+Put router/framework adapters in **separate subpath entries** so bundlers exclude unselected peers:
+
+- `@spiffdog-design/atlas-tools/hooks/use-url-query` — core hook + factories (no adapter bundled)
+- `@spiffdog-design/atlas-tools/hooks/use-url-query/native-router` — native History API provider (opt-in)
+- `@spiffdog-design/atlas-tools/hooks/use-url-query/react-router` — React Router provider
+- `@spiffdog-design/atlas-tools/hooks/use-url-query/tanstack-router` — TanStack Router provider
+
+## Preferred consumer imports
+
+| Package | Prefer | Avoid when bundle size matters |
+|---------|--------|--------------------------------|
+| atlas-tools utilities | `@spiffdog-design/atlas-tools/utilities/string` | Root barrel when only one util is needed |
+| atlas-tools hooks | `@spiffdog-design/atlas-tools/hooks/use-url-query` | `./hooks` barrel in production apps |
+| atlas-components | `@spiffdog-design/atlas-components/button` | Root barrel importing all components |
+| atlas-colors | `@spiffdog-design/atlas-colors` (single export today) | N/A until palette splits |
+
+## Verification
+
+When changing exports, spot-check with esbuild (or the app bundler) that unused modules are excluded from the output.
+
+See `component-library-architecture` monorepo layout for per-package notes.

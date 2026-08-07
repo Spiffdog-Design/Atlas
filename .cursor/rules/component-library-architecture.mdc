@@ -7,24 +7,37 @@ alwaysApply: true
 
 Atlas Design System monorepo. **CSS Modules only** — no Tailwind.
 
+**Framework: React / CSS Modules**
+
+See also: `package-exports-tree-shaking` (export map and barrels), `update-docs-on-completed-work` (where to document components, utilities, and hooks).
+
 ## Stack
 
 - React 19, TypeScript, Biome (2-space indent)
 - Turborepo workspaces: `apps/*`, `packages/*`
 - Colors: `@spiffdog-design/atlas-colors` (OKLab palette scales with `light-dark()`)
 - Components: `@spiffdog-design/atlas-components`
-- Utilities: `@spiffdog-design/atlas-tools`
+- Utilities and hooks: `@spiffdog-design/atlas-tools` — utilities from root or `./utilities/*`; hooks from `./hooks/*`
 - Docs: Storybook in `apps/docs` (stories colocated in `packages/atlas-components/src` and `packages/atlas-colors/src/preview`)
 - Headless UI (when native HTML/CSS is insufficient): `@base-ui/react` — behavior/a11y only; never reimplement dialogs, menus, focus traps
 - Tests: Vitest + Testing Library; Storybook for all shared components
 
 ```ts
-import { Button } from "@spiffdog-design/atlas-components";
+import { Button } from "@spiffdog-design/atlas-components/button";
 import { palette } from "@spiffdog-design/atlas-colors";
+import { useUrlQuery } from "@spiffdog-design/atlas-tools/hooks/use-url-query";
 import "@spiffdog-design/atlas-components/styles.css";
 ```
 
 Storybook resolves package imports via Vite aliases in `apps/docs/.storybook/main.ts`.
+
+## Visual theme and atmosphere
+
+Restrained monochrome: near-white canvas (`--color-bg` / `--gray11`), near-black text (`--color-text` / `--gray1`). Every element earns its placement — minimalism as engineering principle, not decoration.
+
+- **Shadow-as-border** — prefer layered `box-shadow` over heavy `border` on cards and inputs for crisp edges and subtle depth
+- **Optical alignment** — ±1px nudge when perception beats geometry
+- Set `<meta name="theme-color">` to match page background; rely on `color-scheme: light dark` on `:root`
 
 ## Monorepo layout
 
@@ -34,11 +47,13 @@ packages/
   atlas-colors/                  # Palette tokens (TS + CSS custom properties)
   atlas-components/              # Shared React components
     src/
-      styles/                    # index.css, tokens.css, globals.css, component.module.template.css
-      button/                    # Per-component folder (organize by type as library grows)
+      styles/                    # index.css, tokens.css, globals.css
+      button/                    # Per-component folder
       index.ts
-  atlas-tools/                   # Global utilities and helpers
+  atlas-tools/                   # Utilities and React hooks
     src/
+      utilities/                 # Pure helpers (array, string, urlQuery.utils, …)
+      hooks/                     # React hooks (useUrlQuery, …)
   biome-config/
   typescript-config/
 ```
@@ -49,9 +64,13 @@ Per component (e.g. `packages/atlas-components/src/button/`):
 |------|---------|
 | `index.tsx` | React component — JSX, hooks, handlers that delegate to utils |
 | `button.module.css` | Layered CSS Module styles |
-| `button.stories.tsx` | Storybook (`atlas components/Button`) |
+| `button.stories.tsx` | Storybook (`atlas components/Button`) — **required** |
 | `button.utils.ts` | Pure functions — validation, formatters, type guards, defaults |
 | `button.test.ts` | Vitest unit tests for **every export** in `button.utils.ts` |
+
+Per utility module (`packages/atlas-tools/src/utilities/`): TSDoc on exports + `{module}.test.ts`.
+
+Per hook (`packages/atlas-tools/src/hooks/{name}/`): TSDoc on hook and providers + tests + README hooks table entry.
 
 ## Styling rules
 
@@ -67,26 +86,114 @@ Per component (e.g. `packages/atlas-components/src/button/`):
    | `vendor` | third-party library overrides | |
    | *(unlayered)* | consumer app `*.module.css`, ad-hoc UI tweaks | **highest** |
 
-   Shared components: structure in `@layer components`, variants/state in `@layer variants` (see `styles/component.module.template.css`). Consumer app modules stay **unlayered**.
-
 2. **CSS Modules** for all component styles. Global CSS only via layered imports in `styles/index.css`. Storybook uses `localsConvention: "camelCaseOnly"`.
-3. **Data-attributes for variants** — map props to `data-*` on the DOM; style in `@layer variants` (e.g. `[data-variant="primary"]`). No prop-driven conditional class names in JS.
+3. **Data-attributes for variants** — map props to `data-*` on the DOM; style in `@layer variants`. No prop-driven conditional class names in JS.
 4. **Headless UI state** — style via `[data-disabled]`, `[data-checked]`, `[data-highlighted]` in `@layer variants`, not `className` callbacks.
 5. **Static classes only in JS** — join `styles.root` and passthrough `className`; no variant toggles in JS.
 6. **Use tokens** from `styles/tokens.css` for spacing, sizing, color, radius, and typography.
+7. **Shadow-border over borders** for cards, inputs, and elevated surfaces:
+   ```css
+   box-shadow:
+     0 0 0 1px color-mix(in oklab, var(--gray1) 8%, transparent),
+     0 2px 2px color-mix(in oklab, var(--gray1) 4%, transparent),
+     0 0 0 1px var(--gray11);
+   ```
+8. **Nested radii** — child `border-radius` ≤ parent; concentric curves.
+
+## Typography
+
+Target stack in `tokens.css`:
+
+```css
+--font-family-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+```
+
+| Topic | Guidance |
+|-------|----------|
+| OpenType | `font-feature-settings: "liga" 1` globally; `font-variant-numeric: tabular-nums` for numeric columns |
+| Wrapping | `text-wrap: balance` or `text-wrap: pretty` on headings |
+| Tracking | Display headings: modest negative `letter-spacing` in em (e.g. `-0.02em` to `-0.04em`); never positive letter-spacing on headings |
+| Scale | Define `--font-size-*` with `clamp()` — e.g. display `clamp(3.2rem, 2.5vw + 2rem, 4.8rem)`, body median `1.4rem`–`1.6rem` |
+| Mobile inputs | **`font-size: 1.6rem` minimum** on `<input>`, `<select>`, `<textarea>` (prevents iOS Safari zoom; valid with `html { font-size: 62.5% }`) |
+| Weights | 400 body, 500–600 UI labels/buttons, 600–700 display |
+
+## Copywriting
+
+- Active voice, 2nd person ("Install the CLI")
+- Title Case for headings and buttons; sentence case on marketing prose
+- Numerals for counts; non-breaking space between numbers and units
+- Real ellipsis `…`, curly quotes, `&` when space-constrained
+- Specific button labels ("Save API Key" not "Continue")
+- Constructive errors with exit path — state the problem and how to fix it
+
+See `design-philosophy` for Storybook copy tone.
+
+## Colors and tokens
+
+**Palette** (`@spiffdog-design/atlas-colors`) — raw scales as `--{palette}{step}`. Components use semantic `--color-*`, not raw steps.
+
+| Role | Atlas token |
+|------|-------------|
+| Primary text / dark surface | `--gray1` → `--color-text` |
+| Page / card surface | `--gray12` → `--color-bg`, `--color-surface` |
+| Primary / develop / link accent | `--blue6` → `--color-primary` |
+| Focus ring | `--blue8` → `--color-focus-ring` |
+| Ship / destructive accent | `--tomato6` or `--red6` |
+| Preview accent | `--fuchsia6` |
+| Console / syntax blue | `--blue7` |
+| Console purple | `--violet6` |
+| Console pink | `--ruby6` |
+| Inner highlight (shadow stack) | `--gray11` |
+| Subtle border (shadow ring) | `color-mix(in oklab, var(--gray1) 8%, transparent)` |
+
+Interactive states: `:hover`, `:active`, `:focus-visible` must increase contrast vs rest; never rely on color alone — include text labels.
+
+**Rem scale**: `html { font-size: 62.5%; }` → **1rem = 10px**.
+
+Token categories in `tokens.css`: `--space-*`, `--control-height-*`, `--font-size-*`, `--radius-*`, `--color-*`, `--focus-ring`.
+
+- Padding/margin/gap → `--space-*`; colors → `--color-*`; radius → `--radius-*`
+- **OK to hardcode**: `1px` borders, `2px` outline width, `999px` pill radius, `0`/`100%`/`fit-content`
+- **Do not** duplicate token values as literals — add to `tokens.css` when reused
+
+## Depth, elevation, and borders
+
+- Two-layer shadows (ambient + direct) for elevation
+- Prefer shadow-border stack over heavy borders (see Styling rules)
+- Nested radii: child radius ≤ parent radius
+
+## Components and interactions
+
+### Forms
+
+- Generous hit targets; if visual target &lt;24px, expand to ≥24px via padding
+- Label + control share a single hit target
+- **Never block paste**; validate instead of blocking keystrokes
+- Placeholders end with `…` and show example patterns
+- Submit stays enabled until flight; then disable, show spinner, keep original label; ~150–300ms show-delay on fast responses
+- Mobile form controls: **`font-size: 1.6rem` minimum**
+
+### Links and buttons
+
+- `<a href>` for navigation; `<button type="button">` for actions — never `<div onClick>` for routing
+- Preserve Cmd/Ctrl+click on links
+
+### Skeletons, tooltips, drag and drop
+
+- Skeletons mirror final layout exactly (no CLS)
+- Delay first tooltip in a group; instant for subsequent peers
+- Drag: `user-select: none` + `inert` on dragged elements
 
 ## Platform-first behavior
 
-**Prefer native HTML and CSS** for interaction, state, and accessibility. JavaScript is **progressive enhancement** — not the primary way to drive component behavior.
-
-**Goal:** encode behavior in markup and styles so it works across frameworks (vanilla JS, Lit, Web Components, React, Angular, etc.) without reimplementing logic in each.
+**Prefer native HTML and CSS** for interaction, state, and accessibility. JavaScript is **progressive enhancement**.
 
 ### Priority order
 
-1. **Semantic HTML** — use the element that already does the job (`button`, `a`, `input`, `select`, `textarea`, `details`/`summary`, `dialog`, `fieldset`, `label`, etc.)
-2. **CSS** — pseudo-classes (`:hover`, `:focus-visible`, `:checked`, `:disabled`), selectors (`:has()`), attribute selectors (`[data-*]`, `[aria-*]`), and **modern platform CSS** (see below) for layout, motion, and visual state
-3. **Declarative DOM** — variants and state as **`data-*` and native attributes** on the element; consumers set attributes, CSS handles presentation
-4. **JavaScript** — only when platform primitives are insufficient (complex keyboard models, focus traps, virtualization, async validation, etc.); delegate a11y-heavy patterns to `@base-ui/react` rather than bespoke handlers
+1. **Semantic HTML**
+2. **CSS** — pseudo-classes, attribute selectors, modern platform CSS
+3. **Declarative DOM** — `data-*` and native attributes
+4. **JavaScript** — only when platform primitives are insufficient; delegate a11y-heavy patterns to `@base-ui/react`
 
 ### Prefer native primitives
 
@@ -94,113 +201,92 @@ Per component (e.g. `packages/atlas-components/src/button/`):
 |------|-----------|-----------|
 | Disclosure / accordion | `details`/`summary`, `hidden` | `useState` + click toggles |
 | Modal / alert | `<dialog>`, `form[method="dialog"]` | Portal + manual focus trap |
-| Popover / tooltip (when supported) | Popover API + CSS anchor positioning, `title` | Positioning JS on `mouseenter` |
-| Aligned overlays / menus | `anchor-name`, `position-anchor`, `position-area` | `getBoundingClientRect` + manual placement |
-| Nested grid alignment | `subgrid` | JS-measured column sync |
 | Form validation | `required`, `pattern`, `type`, `:invalid` | Custom validators before native fails |
 | Toggle / selection | `checkbox`, `radio`, `select`, `:checked` | `onClick` + boolean state for styling |
 | Navigation | `<a href>`, `<button type="button">` | `div` + `onClick` |
 
 ### Modern CSS platform features
 
-**Prefer built-in CSS** over bespoke JS when evergreen browsers ship the behavior. Atlas targets current evergreen browsers; use these features directly rather than polyfilling or reimplementing in script.
-
-Reach for platform CSS before JS equivalents:
-
-| Capability | Prefer | Over |
-|------------|--------|------|
-| Anchor-linked positioning | `anchor-name`, `position-anchor`, `position-area`, `anchor-default` | Manual `top`/`left` from `getBoundingClientRect` |
-| Nested grid alignment | `grid-template-columns: subgrid` (and rows) | Measuring children to sync tracks |
-| Responsive component layout | `@container` / container query units (`cqw`, `cqi`) | ResizeObserver + breakpoint state |
-| Entry / exit motion | `@starting-style`, `transition-behavior: allow-discrete` | Mount/unmount animation libraries |
-| Scroll-linked effects | `animation-timeline: scroll()`, `scroll()` | Scroll listeners updating styles |
-| Page / shared-element motion | `view-transition-name`, View Transitions API | FLIP layout JS |
-| Intrinsic control sizing | `field-sizing: content` | Auto-resize textarea scripts |
-| Color & theme mixing | `color-mix()`, `light-dark()` | Hardcoded light/dark duplicates |
-
-This list is illustrative — adopt other **standard, evergreen** CSS/HTML platform features the same way. When support is uneven, layer a minimal fallback (simpler layout, reduced motion) rather than blocking on a JS shim.
+Prefer anchor positioning, `@container`, `@starting-style`, `subgrid`, `color-mix()`, `light-dark()`, `field-sizing: content`, and other evergreen platform features over bespoke JS.
 
 ### Component wrappers
 
-React components should be **thin adapters**: render correct semantic markup, map props to `data-*`/native attributes, and add JS only where the platform falls short. When JS is required, keep it framework-agnostic in `{name}.utils.ts` so the same rules apply in other runtimes.
+React components are **thin adapters**: correct semantic markup, `data-*`/native attributes, JS only where the platform falls short. Testable logic lives in `{name}.utils.ts`.
 
-## Colors & tokens
+## Layout and performance
 
-**Palette** (`@spiffdog-design/atlas-colors`) — raw scales as `--{palette}{step}` (e.g. `--gray9`, `--blue8`). See `packages/atlas-colors/src/palette.ts` or Storybook **atlas colors** stories.
+- Flex/Grid over JS measurement; no layout reads in render
+- `env(safe-area-inset-*)` for full-bleed layouts
+- **URL-persisted UI state** — filters, tabs, pagination, expanded panels via `useUrlQuery` + router-specific providers (not `useState` alone for shareable config):
+  ```tsx
+  import { useUrlQuery } from "@spiffdog-design/atlas-tools/hooks/use-url-query";
+  import { ReactRouterUrlQueryProvider } from "@spiffdog-design/atlas-tools/hooks/use-url-query/react-router";
+  // Native (no router): import { NativeUrlQueryProvider } from ".../hooks/use-url-query/native-router";
+  ```
+  Wrap the app in a provider, or pass `options.source`. The core hook does not default to any adapter.
+- `overflow-x: hidden` where needed; `overscroll-behavior: contain` in modals/drawers
+- Virtualize lists &gt;50 items (`content-visibility: auto` or virtualization lib)
+- Preload critical fonts (`rel="preload"`, `font-display: swap`) and above-fold images (`fetchpriority="high"`, explicit dimensions)
+- `min-width: 0` on flex children for text truncation
 
-```css
-@import "@spiffdog-design/atlas-colors/index.css";
-```
+## Animation and motion
 
-```ts
-import { palette } from "@spiffdog-design/atlas-colors";
-const primary = palette.blue[9];
-```
+- Always respect `prefers-reduced-motion`
+- Animate only `transform` and `opacity`
+- Never `transition: all` — list properties explicitly
+- Interruptible animations; no autoplay
+- SVG: transform wrapper + `transform-box: fill-box; transform-origin: center`
 
-**Semantic tokens** (`styles/tokens.css`) — map palette to intent (`--color-bg`, `--color-text`, `--color-primary`, etc.). Components use `--color-*`, not raw palette steps.
+## Accessibility
 
-**Theming**: atlas-colors sets `color-scheme: light dark` on `:root`. Force appearance via `document.documentElement.style.colorScheme`.
-
-**Rem scale**: `html { font-size: 62.5%; }` in `globals.css` → **1rem = 10px**.
-
-| Token | rem | px |
-|-------|-----|-----|
-| `--space-0-5` | 0.125rem | 1.25px |
-| `--space-1` | 0.25rem | 2.5px |
-| `--space-2` | 0.5rem | 5px |
-| `--space-3` | 0.75rem | 7.5px |
-| `--space-4` | 1rem | 10px |
-| `--space-5` | 1.25rem | 12.5px |
-| `--space-6` | 1.5rem | 15px |
-| `--space-8` | 2rem | 20px |
-
-Token categories in `tokens.css`: `--space-*`, `--control-height-*`, `--font-size-*`, `--radius-*`, `--color-*`, `--focus-ring`.
-
-- Padding/margin/gap → `--space-*`; colors → `--color-*`; radius → `--radius-*`
-- **OK to hardcode**: `1px` borders, `2px` outline width, `999px` pill radius, `0`/`100%`/`fit-content`, `@layer vendor` overrides
-- **Do not** duplicate token values as literals — add to `tokens.css` when reused or design-intent
+- Mandatory `:focus-visible` ring via `--focus-ring`; never `outline: none` without replacement; use `:focus-within` for groups
+- Icon-only buttons: `aria-label`; images: meaningful `alt` or `alt=""`; decorative icons: `aria-hidden="true"`
+- Async updates: `aria-live="polite"` for toasts, loading, inline validation
+- i18n: `translate="no"` on brand/code tokens; `Intl.*` for dates and numbers
+- Every form control gets `<label>` or `aria-label`
 
 ## Storybook
 
 - `npm run dev` from repo root or `apps/docs`
 - Story titles: `atlas components/{Name}`, `atlas colors/{Name}`
 - Preview imports `@spiffdog-design/atlas-components/styles/index.css`
+- **Required** for every shared component: `{name}.stories.tsx` (see `update-docs-on-completed-work`)
 
-## Pure logic & testing
+## Pure logic and testing
 
-Extract anything testable without React or the DOM into `{name}.utils.ts`:
+Extract testable logic into `{name}.utils.ts` or `atlas-tools` utilities. **Unit tests required** for every export from utils modules.
 
-- Validation, defaults, type guards, formatters, mappers, computed constants
+Also required for every shared component: `*.stories.tsx`. Optional: `*.test.tsx` for render/a11y tests.
 
-Keep in `index.tsx`: JSX, hooks, component state, and thin handlers that call utils.
+## Agent prompt guide
 
-**Unit tests are required.** Add `{name}.test.ts` (Vitest) covering every export from `{name}.utils.ts`. Do not skip because logic "looks small" — extract first, then test.
+**Quick Tech Stack and Rules**
 
-```typescript
-// button.utils.ts
-export function getButtonLabel(name: string) { return `Hello from ${name}`; }
+- Framework: **React / CSS Modules**
+- Typography: Inter, `"liga"`, tabular nums, `text-wrap: balance`
+- Spacing/layout: Flex/Grid, `min-width: 0` on flex children
+- State: **`useUrlQuery`** for URL-driven UI config
+- Imports: prefer subpaths (`/button`, `/utilities/string`, `/hooks/use-url-query`) for tree-shaking
 
-// button.test.ts
-import { describe, expect, it } from "vitest";
-import { getButtonLabel } from "./button.utils.js";
+**Example prompts**
 
-describe("getButtonLabel", () => {
-  it("includes the app name", () => {
-    expect(getButtonLabel("Atlas")).toBe("Hello from Atlas");
-  });
-});
-```
-
-Also required for every shared component: `*.stories.tsx`. Optional: `*.test.tsx` for render/a11y tests with Testing Library.
+- *"Create a hero section. Headline uses `--font-size-display` clamp, `text-wrap: balance`, modest negative letter-spacing. CTA is native `<button>`, keeps label but shows spinner on submit. Card uses shadow-border stack from tokens."*
+- *"Build an API key input. Explicit `<label>`, `font-size: 1.6rem`, autocomplete='off', placeholder ending in '…', allows paste. Focus uses `--focus-ring`."*
+- *"Design a card grid. Cards use multi-layer shadow tokens. Wrap routable cards in `<a href>`. Persist filter tab in URL via `useUrlQuery`."*
 
 ## Do not
 
 - Add Tailwind or utility-first CSS frameworks
+- Use `nuqs` or third-party query-string libs when `useUrlQuery` covers the need
 - Put variant styles in global CSS or inline styles
 - Hardcode spacing/sizing/color/radius when a token exists
-- Skip stories or `{name}.test.ts` for new shared components
-- Inline testable logic in `index.tsx` instead of `{name}.utils.ts`
+- Skip stories, TSDoc, or `{name}.test.ts` for new shared artifacts
+- Inline testable logic in `index.tsx` instead of utils modules
 - Use `@mui/base` (deprecated) — use `@base-ui/react`
-- Reimplement in JS what native HTML/CSS already provides (e.g. visibility toggles, basic disclosure, form validity styling, overlay positioning, subgrid alignment)
-- Put primary interaction or visual state only in React handlers/state when equivalent `data-*`, attributes, or pseudo-classes would work
-- Use non-semantic elements (`div`, `span`) as interactive controls when a native element exists
+- Reimplement in JS what native HTML/CSS already provides
+- Use non-semantic elements as interactive controls when a native element exists
+- Use positive letter-spacing on display type
+- Use `transition: all` or animate layout properties (`width`, `height`, `top`)
+- Block paste or disable zoom (`maximum-scale=1`, `user-scalable=no`)
+- Use `<div>` for links or `<a>` for button actions
+- Use `autoFocus` on mobile
