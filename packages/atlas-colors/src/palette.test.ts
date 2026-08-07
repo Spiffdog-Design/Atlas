@@ -8,6 +8,11 @@ describe("palette", () => {
     expect(palette.gray[12]).toMatch(/^light-dark\(/);
   });
 
+  it("uses OKLCh color functions for palette values", () => {
+    expect(palette.gray[1]).toContain("oklch(");
+    expect(palette.amber[12]).toContain("oklch(");
+  });
+
   it("has twelve steps per named scale", () => {
     for (const name of Object.keys(palette)) {
       const steps = Object.keys(palette[name])
