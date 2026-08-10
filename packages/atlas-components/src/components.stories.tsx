@@ -5,8 +5,8 @@ import {
   Code,
   FieldCheckbox,
   FieldInput,
+  FieldSelect,
   ProgressBar,
-  Select,
   Slider,
 } from "./";
 
@@ -47,11 +47,15 @@ export const AllComponents: Story = {
       >
         <div style={{ display: "grid", gap: "1rem" }}>
           <FieldInput label="Email address" placeholder="you@example.com" />
-          <Select label="Plan type">
-            <option value="starter">Starter</option>
-            <option value="growth">Growth</option>
-            <option value="enterprise">Enterprise</option>
-          </Select>
+          <FieldSelect
+            items={[
+              { label: "Starter", value: "starter" },
+              { label: "Growth", value: "growth" },
+              { label: "Enterprise", value: "enterprise" },
+            ]}
+            label="Plan type"
+            placeholder="Choose a plan…"
+          />
           <FieldCheckbox label="I agree to the terms of service" />
           <div style={{ display: "grid", gap: "1rem" }}>
             <div>
@@ -78,7 +82,7 @@ export const AllComponents: Story = {
           }}
         >
           <p style={{ margin: 0, color: "var(--color-text)" }}>
-            Use <Code>Button</Code>, <Code>FieldInput</Code>, <Code>Select</Code>, and{" "}
+            Use <Code>Button</Code>, <Code>FieldInput</Code>, <Code>FieldSelect</Code>, and{" "}
             <Code>FieldCheckbox</Code> together for interactive forms.
           </p>
           <p style={{ margin: 0, color: "var(--color-text-muted)" }}>

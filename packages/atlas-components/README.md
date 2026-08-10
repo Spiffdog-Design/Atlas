@@ -34,6 +34,7 @@ Form controls split into **raw controls** (`Input`, `Checkbox`) and **field wrap
 ```ts
 import { FieldInput } from "@spiffdog-design/atlas-components/input";
 import { FieldCheckbox } from "@spiffdog-design/atlas-components/checkbox";
+import { FieldSelect } from "@spiffdog-design/atlas-components/select";
 ```
 
 Subpath imports are supported for tree-shaking (preferred over the root barrel):
@@ -77,10 +78,15 @@ packages/atlas-components/src/
 │   ├── field-input.test.tsx
 │   └── *.stories.tsx
 ├── select/
-│   ├── index.tsx
+│   ├── index.tsx           # Re-exports Select + FieldSelect
+│   ├── select-control.tsx  # Raw control (full Base UI part tree)
+│   ├── field-select.tsx    # Stack field layout
 │   ├── select.module.css
+│   ├── select.utils.ts
+│   ├── select.utils.test.ts
 │   ├── select.test.tsx
-│   └── select.stories.tsx
+│   ├── field-select.test.tsx
+│   └── *.stories.tsx
 ├── slider/
 │   ├── index.tsx
 │   ├── slider.module.css

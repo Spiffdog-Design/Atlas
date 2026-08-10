@@ -11,7 +11,7 @@ Separate import groups with a **blank line** between each. Sort named specifiers
 
 1. **Third-party** — npm packages (`react`, `@base-ui/*`, `@storybook/*`, `vitest`, `classnames`, etc.)
 2. **Workspace packages** — `@spiffdog-design/atlas-components`, `@spiffdog-design/atlas-colors`, other `@spiffdog-design/*` monorepo packages
-3. **Components** — relative UI modules (`./index`, `../button/index`) — not `*.utils` or styles
+3. **Components** — relative UI modules (`./`, `../button`) — not `*.utils` or styles
 4. **Component utils** — colocated `*.utils` modules (`./button.utils`, `../button/button.utils`)
 5. **Styling** — CSS modules and stylesheets (`*.module.css`, `*.css`) last
 
@@ -23,7 +23,7 @@ import { useId } from "react";
 
 import { Button } from "@spiffdog-design/atlas-components/button";
 
-import { Label } from "../label/index";
+import { Label } from "../label";
 
 import { getFieldErrorId } from "./field.utils";
 
@@ -34,7 +34,7 @@ import styles from "./field.module.css";
 // ❌ BAD — styles before utils, utils before components
 import styles from "./field.module.css";
 import { getFieldErrorId } from "./field.utils";
-import { Label } from "../label/index";
+import { Label } from "../label";
 import { useId } from "react";
 ```
 
@@ -46,4 +46,4 @@ Do not import component utils before the components that use them. Do not import
 
 ## Relative import paths
 
-Omit file extensions on relative TypeScript imports (`from "./button.utils"`, not `from "./button.utils.js"`). `moduleResolution: "bundler"` resolves `.ts`/`.tsx` sources; compiled output still emits `.js` files.
+Omit file extensions and `/index` suffixes on relative TypeScript imports (`from "./button.utils"`, `from "../icons"`, not `from "./button.utils.js"` or `from "../icons/index"`). With `moduleResolution: "bundler"`, directory imports resolve to each folder's `index.tsx`; compiled output still emits `.js` files.

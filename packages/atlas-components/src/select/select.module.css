@@ -1,39 +1,25 @@
 @layer components {
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    width: 100%;
-  }
-
-  .label {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-  }
-
-  .root {
-    width: 100%;
-  }
-
   .trigger {
-    min-height: var(--control-height-md);
+    box-sizing: border-box;
+    display: inline-flex;
     width: 100%;
+    min-height: var(--control-height-md);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
     padding: 0 var(--space-4);
     border: none;
     border-radius: var(--radius-md);
     background: var(--color-surface);
+    font-family: inherit;
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-base);
     color: var(--color-text);
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
     cursor: pointer;
-    box-shadow: var(--border-edge, var(--border-edge-default));
+    box-shadow: var(--select-edge, var(--border-edge-default));
     transition: var(--transition-base);
-  }
-
-  .trigger:hover {
-    --border-edge: var(--border-edge-primary);
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .trigger:focus-visible {
@@ -41,18 +27,33 @@
     outline-offset: var(--focus-ring-offset);
   }
 
+  .trigger[data-invalid] {
+    --select-edge: var(--border-edge-error);
+  }
+
+  .trigger[data-disabled] {
+    --select-edge: var(--border-edge-subtle);
+    color: var(--color-text-muted);
+    background: var(--color-surface-hover);
+    cursor: not-allowed;
+  }
+
   .value {
     flex: 1;
     min-width: 0;
-    font-size: var(--font-size-base);
-    color: var(--color-text);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: start;
+  }
+
+  .value[data-placeholder] {
+    color: var(--color-text-muted);
   }
 
   .icon {
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     color: var(--color-text-muted);
@@ -62,19 +63,13 @@
     z-index: 1;
   }
 
-  .backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.12);
-  }
-
   .popup {
-    min-width: 100%;
-    background: var(--color-surface);
+    min-width: var(--anchor-width, 100%);
+    overflow: hidden;
     border: none;
     border-radius: var(--radius-md);
+    background: var(--color-surface);
     box-shadow: var(--border-edge-default), var(--shadow-float);
-    overflow: hidden;
   }
 
   .list {
@@ -84,45 +79,42 @@
   }
 
   .item {
-    display: flex;
+    display: grid;
+    grid-template-columns: var(--space-8) minmax(0, 1fr);
     align-items: center;
     gap: var(--space-3);
     width: 100%;
-    padding: 0.75rem var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: none;
     background: transparent;
+    font-family: inherit;
+    font-size: var(--font-size-base);
     color: var(--color-text);
     cursor: pointer;
     transition: var(--transition-base);
   }
 
-  .item[data-highlighted="true"] {
+  .item[data-highlighted] {
     background: var(--color-surface-hover);
   }
 
-  .item[data-disabled="true"] {
+  .item[data-disabled] {
     opacity: var(--opacity-disabled);
     cursor: not-allowed;
   }
 
-  .itemIndicatorSpacer {
-    display: inline-flex;
-    width: 1.25rem;
-    min-width: 1.25rem;
-    visibility: hidden;
-  }
-
   .itemIndicator {
     display: inline-flex;
+    grid-column: 1;
+    width: var(--space-8);
+    height: var(--space-8);
     align-items: center;
     justify-content: center;
-    width: 1.25rem;
-    min-width: 1.25rem;
-    margin-left: -1.25rem;
     color: var(--color-primary);
   }
 
   .itemText {
-    flex: 1;
+    grid-column: 2;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -134,17 +126,65 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 0.5rem 0;
+    padding: var(--space-2) 0;
     color: var(--color-text-muted);
     background: var(--color-surface);
   }
+}
 
-  .arrow {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text-muted);
-    background: var(--color-surface);
+@layer variants {
+  .trigger[data-appearance="base"] {
+    --select-edge: var(--border-edge-default);
+  }
+
+  .trigger[data-appearance="primary"] {
+    --select-edge: var(--border-edge-primary);
+  }
+
+  .trigger[data-appearance="success"] {
+    --select-edge: var(--border-edge-success);
+  }
+
+  .trigger[data-appearance="warning"] {
+    --select-edge: var(--border-edge-warning);
+  }
+
+  .trigger[data-appearance="alert"] {
+    --select-edge: var(--border-edge-error);
+  }
+
+  .trigger[data-appearance][data-disabled] {
+    --select-edge: var(--border-edge-subtle);
+  }
+
+  /* appearance-tinted popup shadows */
+  .popup[data-appearance="base"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--gray1) 4%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--gray1) 6%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="primary"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--color-primary) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--color-primary) 14%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="success"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--color-success) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--color-success) 14%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="warning"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--color-warning) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--color-warning) 14%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="alert"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--color-error) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--color-error) 14%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
   }
 }

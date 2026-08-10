@@ -1,12 +1,9 @@
 {
   "extends": "../typescript-config/react-library.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
     "outDir": "dist",
     "rootDir": "src",
-    "strictNullChecks": true,
-    "module": "ES2022",
-    "moduleResolution": "bundler"
+    "strictNullChecks": true
   },
   "include": ["src"],
   "exclude": [

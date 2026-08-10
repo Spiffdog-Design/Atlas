@@ -1,7 +1,7 @@
 import { Checkbox as BaseCheckbox } from "@base-ui/react/checkbox";
 import type { ComponentPropsWithoutRef } from "react";
 
-import { CheckIcon } from "../icons/index";
+import { CheckIcon } from "../icons";
 
 import {
   getCheckboxDataAttributes,

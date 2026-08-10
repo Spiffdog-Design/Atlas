@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Select } from "./select-control";
+import { FieldSelect } from "./field-select";
 
 const planItems = [
   { label: "Starter", value: "starter" },
@@ -9,12 +9,13 @@ const planItems = [
 ];
 
 const meta = {
-  title: "atlas components/base/Select",
-  component: Select,
+  title: "atlas components/field/FieldSelect",
+  component: FieldSelect,
   args: {
     appearance: "base",
     disabled: false,
     items: planItems,
+    label: "Plan type",
     placeholder: "Choose a plan…",
   },
   argTypes: {
@@ -25,46 +26,57 @@ const meta = {
     disabled: {
       control: "boolean",
     },
+    label: {
+      control: "text",
+    },
+    description: {
+      control: "text",
+    },
+    error: {
+      control: "text",
+    },
     className: {
       table: { disable: true },
     },
   },
-} satisfies Meta<typeof Select>;
+} satisfies Meta<typeof FieldSelect>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    "aria-label": "Plan type",
-  },
-};
+export const Default: Story = {};
 
-export const Primary: Story = {
+export const PrimaryOpen: Story = {
   args: {
-    "aria-label": "Plan type",
     appearance: "primary",
   },
-};
-
-export const Success: Story = {
-  args: {
-    "aria-label": "Plan type",
-    appearance: "success",
+  parameters: {
+    docs: {
+      description: {
+        story: "Open the menu in the canvas to inspect the appearance-tinted popup shadow.",
+      },
+    },
   },
 };
 
-export const WithValue: Story = {
+export const WithDescription: Story = {
   args: {
-    "aria-label": "Plan type",
-    defaultValue: "growth",
+    description: "You can upgrade at any time.",
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    appearance: "alert",
+    error: "Choose a plan to continue.",
+    required: true,
   },
 };
 
 export const Disabled: Story = {
   args: {
-    "aria-label": "Plan type",
+    defaultValue: "starter",
     disabled: true,
   },
 };
