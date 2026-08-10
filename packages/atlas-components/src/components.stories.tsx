@@ -3,15 +3,15 @@ import {
   Button,
   Card,
   Code,
-  Checkbox,
-  Input,
+  FieldCheckbox,
+  FieldInput,
   ProgressBar,
   Select,
   Slider,
 } from "./";
 
 const meta = {
-  title: "atlas components/Component Set",
+  title: "atlas components/set/Component Set",
   component: Button,
   parameters: {
     layout: "padded",
@@ -46,13 +46,13 @@ export const AllComponents: Story = {
         }}
       >
         <div style={{ display: "grid", gap: "1rem" }}>
-          <Input label="Email address" placeholder="you@example.com" />
+          <FieldInput label="Email address" placeholder="you@example.com" />
           <Select label="Plan type">
             <option value="starter">Starter</option>
             <option value="growth">Growth</option>
             <option value="enterprise">Enterprise</option>
           </Select>
-          <Checkbox label="I agree to the terms of service" />
+          <FieldCheckbox label="I agree to the terms of service" />
           <div style={{ display: "grid", gap: "1rem" }}>
             <div>
               <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)" }}>
@@ -78,7 +78,8 @@ export const AllComponents: Story = {
           }}
         >
           <p style={{ margin: 0, color: "var(--color-text)" }}>
-            Use <Code>Button</Code>, <Code>Input</Code>, <Code>Select</Code>, and <Code>Checkbox</Code> together for interactive forms.
+            Use <Code>Button</Code>, <Code>FieldInput</Code>, <Code>Select</Code>, and{" "}
+            <Code>FieldCheckbox</Code> together for interactive forms.
           </p>
           <p style={{ margin: 0, color: "var(--color-text-muted)" }}>
             Cards hold layout and context, while progress and slider controls show stateful feedback.

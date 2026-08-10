@@ -13,7 +13,8 @@ export interface FormFieldWrapperProps extends FormFieldProps {
 /**
  * Wraps a form control with Base UI Field parts when label, description, or error is present.
  * Part order: Label → control → Description → Error.
- * Pass a Base UI control primitive as `children` (Input, Checkbox.Root, Select.Trigger, …).
+ * Pass a Base UI control primitive as `children` (Input, Checkbox, Select.Trigger, …).
+ * Prefer `FieldInput` and `FieldCheckbox` for labeled form controls.
  */
 export function FormField({
   label,

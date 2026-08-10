@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Code } from "./";
 
 const meta = {
-  title: "atlas components/Code",
+  title: "atlas components/base/Code",
   component: Code,
   args: {
     children: "npm run dev",

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ProgressBar } from "./";
 
 const meta = {
-  title: "atlas components/ProgressBar",
+  title: "atlas components/base/ProgressBar",
   component: ProgressBar,
   args: {
     value: 35,

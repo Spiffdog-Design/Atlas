@@ -1,18 +1,4 @@
-import { Checkbox as BaseCheckbox } from "@base-ui/react/checkbox";
+export { Checkbox, type CheckboxProps } from "./checkbox";
+export { FieldCheckbox, type FieldCheckboxProps } from "./field-checkbox";
 
-import { CheckIcon } from "../icons/index";
-
-import styles from "./checkbox.module.css";
-
-export function Checkbox() {
-  return (
-    <label className={styles.label}>
-      <BaseCheckbox.Root defaultChecked className={styles.checkbox}>
-        <BaseCheckbox.Indicator className={styles.indicator}>
-          <CheckIcon />
-        </BaseCheckbox.Indicator>
-      </BaseCheckbox.Root>
-      Enable notifications
-    </label>
-  );
-}
+export { Checkbox as default } from "./checkbox";

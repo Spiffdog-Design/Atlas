@@ -13,9 +13,27 @@ npm install @spiffdog-design/atlas-colors @spiffdog-design/atlas-components
 ## Usage
 
 ```ts
-import { Button, Card, Code, Checkbox, Input, Select, Slider, ProgressBar } from "@spiffdog-design/atlas-components";
+import {
+  Button,
+  Card,
+  Code,
+  Checkbox,
+  FieldCheckbox,
+  FieldInput,
+  Input,
+  Select,
+  Slider,
+  ProgressBar,
+} from "@spiffdog-design/atlas-components";
 import "@spiffdog-design/atlas-colors/index.css";
 import "@spiffdog-design/atlas-components/styles.css";
+```
+
+Form controls split into **raw controls** (`Input`, `Checkbox`) and **field wrappers** (`FieldInput`, `FieldCheckbox`) with label, description, and error chrome. Use the field wrappers in app forms; use raw controls when composing custom layouts.
+
+```ts
+import { FieldInput } from "@spiffdog-design/atlas-components/input";
+import { FieldCheckbox } from "@spiffdog-design/atlas-components/checkbox";
 ```
 
 Subpath imports are supported for tree-shaking (preferred over the root barrel):
@@ -39,15 +57,25 @@ packages/atlas-components/src/
 │   ├── button.test.ts
 │   └── button.stories.tsx
 ├── checkbox/
-│   ├── index.tsx
+│   ├── index.tsx           # Re-exports Checkbox + FieldCheckbox
+│   ├── checkbox.tsx        # Raw control
+│   ├── field-checkbox.tsx  # Inline field layout + optional fieldLabel
 │   ├── checkbox.module.css
+│   ├── field-checkbox.module.css
+│   ├── checkbox.utils.ts
+│   ├── checkbox.utils.test.ts
 │   ├── checkbox.test.tsx
-│   └── checkbox.stories.tsx
+│   ├── field-checkbox.test.tsx
+│   └── *.stories.tsx
 ├── input/
-│   ├── index.tsx
+│   ├── index.tsx           # Re-exports Input + FieldInput
+│   ├── input.tsx           # Raw control
+│   ├── field-input.tsx     # Stack field layout
 │   ├── input.module.css
+│   ├── input.utils.ts
 │   ├── input.test.tsx
-│   └── input.stories.tsx
+│   ├── field-input.test.tsx
+│   └── *.stories.tsx
 ├── select/
 │   ├── index.tsx
 │   ├── select.module.css
@@ -111,4 +139,4 @@ Build output goes to `dist/` (TypeScript emit + copied styles).
 
 Component stories and an overview MDX guide are in Storybook (`npm run dev` from the repo root) under **atlas components**.
 
-A combined component set story is available at `packages/atlas-components/src/components.stories.tsx` under **atlas components/Component Set**.
+A combined component set story is available at `packages/atlas-components/src/components.stories.tsx` under **atlas components/set/Component Set**.

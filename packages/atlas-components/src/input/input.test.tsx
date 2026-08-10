@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import { Input } from "./";
 
 describe("Input", () => {
-  it("renders an input field", () => {
+  it("renders an input control", () => {
     const { getByPlaceholderText } = render(<Input placeholder="Email" />);
 
     expect(getByPlaceholderText("Email")).toBeInTheDocument();
@@ -28,25 +28,5 @@ describe("Input", () => {
     const { getByRole } = render(<Input aria-label="Email" disabled />);
 
     expect(getByRole("textbox")).toBeDisabled();
-  });
-
-  it("associates the label through Field", () => {
-    const { getByLabelText } = render(
-      <Input label="Email address" placeholder="you@example.com" />,
-    );
-
-    expect(getByLabelText("Email address")).toBeInTheDocument();
-  });
-
-  it("renders helper text through Field.Description", () => {
-    const { getByText } = render(
-      <Input
-        description="We never share your email."
-        label="Email address"
-        placeholder="you@example.com"
-      />,
-    );
-
-    expect(getByText("We never share your email.")).toBeInTheDocument();
   });
 });

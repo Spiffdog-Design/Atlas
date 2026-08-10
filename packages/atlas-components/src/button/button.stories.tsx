@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./";
 
 const meta = {
-  title: "atlas components/Button",
+  title: "atlas components/base/Button",
   component: Button,
   args: {
     appearance: "primary",

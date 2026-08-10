@@ -47,4 +47,4 @@ npm run check-types -w docs
 - **Color previews** — add stories under `packages/atlas-colors/src/preview/`
 - **MDX guides** — add files under `stories/` or `stories/colors/`
 
-Story titles follow `atlas components/{Name}` and `atlas colors/{Name}`.
+Story titles follow `atlas components/{type}/{Name}` and `atlas colors/{Name}`. Use `base/` for raw controls, `field/` for field wrappers (`FieldInput`, `FieldCheckbox`), and `set/` for combined previews.

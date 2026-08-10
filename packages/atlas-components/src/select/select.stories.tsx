@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Select } from "./";
 
 const meta = {
-  title: "atlas components/Select",
+  title: "atlas components/base/Select",
   component: Select,
   args: {
     label: "Choose an option",

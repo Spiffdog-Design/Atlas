@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Slider } from "./";
 
 const meta = {
-  title: "atlas components/Slider",
+  title: "atlas components/base/Slider",
   component: Slider,
   args: {
     min: 0,

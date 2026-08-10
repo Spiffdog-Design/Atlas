@@ -64,7 +64,7 @@ Per component (e.g. `packages/atlas-components/src/button/`):
 |------|---------|
 | `index.tsx` | React component — JSX, hooks, handlers that delegate to utils |
 | `button.module.css` | Layered CSS Module styles |
-| `button.stories.tsx` | Storybook (`atlas components/Button`) — **required** |
+| `button.stories.tsx` | Storybook (`atlas components/base/Button`) — **required** |
 | `button.utils.ts` | Pure functions — validation, formatters, type guards, defaults |
 | `button.test.ts` | Vitest unit tests for **every export** in `button.utils.ts` |
 
@@ -264,7 +264,7 @@ React components are **thin adapters**: correct semantic markup, `data-*`/native
 ## Storybook
 
 - `npm run dev` from repo root or `apps/docs`
-- Story titles: `atlas components/{Name}`, `atlas colors/{Name}`
+- Story titles: `atlas components/{type}/{Name}` (e.g. `base/Input`, `field/FieldInput`, `set/Component Set`), `atlas colors/{Name}`
 - Preview imports `@spiffdog-design/atlas-components/styles/index.css`
 - **Required** for every shared component: `{name}.stories.tsx` (see `update-docs-on-completed-work`)
 
