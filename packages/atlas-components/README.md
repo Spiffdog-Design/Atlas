@@ -79,7 +79,7 @@ Subpath imports are supported for tree-shaking (preferred over the root barrel):
 import { Button } from "@spiffdog-design/atlas-components/button";
 ```
 
-Explicit export paths: `./button`, `./card`, `./code`, `./checkbox`, `./input`, `./radio-group`, `./switch`, `./tabs`, `./toast`, `./slider`, `./progressbar`, `./select`, `./icon`, `./styles.css`.
+Explicit export paths: `./button`, `./card`, `./code`, `./checkbox`, `./input`, `./radio-group`, `./switch`, `./tabs`, `./toast`, `./dialog`, `./slider`, `./progressbar`, `./select`, `./icon`, `./styles.css`.
 
 ## Structure
 
@@ -160,6 +160,15 @@ packages/atlas-components/src/
 │   ├── toast.utils.test.ts
 │   ├── toast.test.tsx
 │   └── toast.stories.tsx
+├── dialog/
+│   ├── index.tsx           # Dialog compound parts + createHandle
+│   ├── dialog.tsx
+│   ├── dialog-actions.tsx
+│   ├── dialog.module.css
+│   ├── dialog.utils.ts
+│   ├── dialog.utils.test.ts
+│   ├── dialog.test.tsx
+│   └── dialog.stories.tsx
 ├── slider/
 │   ├── index.tsx           # Re-exports Slider + FieldSlider
 │   ├── slider.tsx          # Raw control

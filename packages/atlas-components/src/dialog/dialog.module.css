@@ -1,0 +1,162 @@
+@layer components {
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    min-height: 100dvh;
+    background: color-mix(in oklch, var(--gray1) 20%, transparent);
+    transition: opacity 150ms;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .backdrop {
+      position: absolute;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .backdrop {
+      transition: none;
+    }
+  }
+
+  .backdrop[data-starting-style],
+  .backdrop[data-ending-style] {
+    opacity: 0;
+  }
+
+  .popup {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 24rem;
+    max-width: calc(100vw - var(--space-8));
+    padding: var(--space-5);
+    border: none;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: var(--border-edge-default), var(--shadow-float);
+    transform: translate(-50%, -50%);
+    transition:
+      transform 100ms ease-out,
+      opacity 100ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .popup {
+      transition: opacity 100ms ease-out;
+    }
+  }
+
+  .popup[data-starting-style],
+  .popup[data-ending-style] {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.98);
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    color: var(--dialog-title-color, var(--color-text));
+  }
+
+  .description {
+    margin: 0;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text-muted);
+    text-wrap: pretty;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+  }
+}
+
+@layer variants {
+  .popup[data-appearance="base"] {
+    --dialog-title-color: var(--color-text);
+  }
+
+  .popup[data-appearance="primary"] {
+    --dialog-title-color: var(--color-primary);
+  }
+
+  .popup[data-appearance="success"] {
+    --dialog-title-color: var(--color-success);
+  }
+
+  .popup[data-appearance="warning"] {
+    --dialog-title-color: var(--color-warning);
+  }
+
+  .popup[data-appearance="alert"] {
+    --dialog-title-color: var(--color-error);
+  }
+
+  .popup[data-appearance="base"] {
+    --shadow-float-direct: 0 2px 8px
+      color-mix(in oklch, var(--gray1) 4%, transparent);
+    --shadow-float-ambient: 0 8px 24px
+      color-mix(in oklch, var(--gray1) 6%, transparent);
+    box-shadow:
+      var(--border-edge-default), var(--shadow-float-direct),
+      var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="primary"] {
+    --shadow-float-direct: 0 2px 8px
+      color-mix(in oklch, var(--color-primary) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px
+      color-mix(in oklch, var(--color-primary) 14%, transparent);
+    box-shadow:
+      var(--border-edge-default), var(--shadow-float-direct),
+      var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="success"] {
+    --shadow-float-direct: 0 2px 8px
+      color-mix(in oklch, var(--color-success) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px
+      color-mix(in oklch, var(--color-success) 14%, transparent);
+    box-shadow:
+      var(--border-edge-default), var(--shadow-float-direct),
+      var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="warning"] {
+    --shadow-float-direct: 0 2px 8px
+      color-mix(in oklch, var(--color-warning) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px
+      color-mix(in oklch, var(--color-warning) 14%, transparent);
+    box-shadow:
+      var(--border-edge-default), var(--shadow-float-direct),
+      var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="alert"] {
+    --shadow-float-direct: 0 2px 8px
+      color-mix(in oklch, var(--color-error) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px
+      color-mix(in oklch, var(--color-error) 14%, transparent);
+    box-shadow:
+      var(--border-edge-default), var(--shadow-float-direct),
+      var(--shadow-float-ambient);
+  }
+}

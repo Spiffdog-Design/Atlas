@@ -7,35 +7,19 @@ import { useToast } from "./use-toast";
 
 import type { ToastAppearance } from "./toast.utils";
 
-const meta = {
-  title: "atlas components/base/Toast",
-  component: ToastProvider,
-  decorators: [withToastProvider],
-  parameters: {
-    docs: {
-      description: {
-        component:
-          "Toast notifications require `ToastProvider` at the app root (or a Storybook decorator). Queue toasts with `useToast().show()` — pass `appearance` for semantic tint on the title and drop shadow.",
-      },
-    },
-  },
-} satisfies Meta<typeof ToastProvider>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+export interface ToastTriggerProps {
+  appearance?: ToastAppearance;
+  description?: string;
+  rounded?: boolean;
+  title?: string;
+}
 
 function ToastTrigger({
   appearance = "base",
   description = "This is a toast notification.",
   rounded = false,
   title = "Toast created",
-}: {
-  appearance?: ToastAppearance;
-  description?: string;
-  rounded?: boolean;
-  title?: string;
-}) {
+}: ToastTriggerProps) {
   const toast = useToast();
   const [count, setCount] = useState(0);
 
@@ -58,46 +42,90 @@ function ToastTrigger({
   );
 }
 
-export const Default: Story = {
-  render: () => <ToastTrigger />,
-};
+const appearanceOptions = [
+  "alert",
+  "base",
+  "primary",
+  "success",
+  "warning",
+] as const;
+
+const meta = {
+  title: "atlas components/base/Toast",
+  component: ToastTrigger,
+  decorators: [withToastProvider],
+  args: {
+    appearance: "base",
+    description: "This is a toast notification.",
+    rounded: false,
+    title: "Toast created",
+  },
+  argTypes: {
+    appearance: {
+      control: "select",
+      options: appearanceOptions,
+    },
+    description: {
+      control: "text",
+    },
+    rounded: {
+      control: "boolean",
+    },
+    title: {
+      control: "text",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Toast notifications require `ToastProvider` at the app root (or a Storybook decorator). Queue toasts with `useToast().show()` — pass `appearance` for semantic tint on the title and drop shadow.",
+      },
+    },
+  },
+} satisfies Meta<typeof ToastTrigger>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
 
 export const PrimaryAppearance: Story = {
-  render: () => <ToastTrigger appearance="primary" title="Update available" />,
+  args: {
+    appearance: "primary",
+    title: "Update available",
+  },
 };
 
 export const SuccessAppearance: Story = {
-  render: () => (
-    <ToastTrigger
-      appearance="success"
-      description="Your API key was copied to the clipboard."
-      title="Copied"
-    />
-  ),
+  args: {
+    appearance: "success",
+    description: "Your API key was copied to the clipboard.",
+    title: "Copied",
+  },
 };
 
 export const WarningAppearance: Story = {
-  render: () => (
-    <ToastTrigger
-      appearance="warning"
-      description="Your session expires in 5 minutes."
-      title="Session expiring"
-    />
-  ),
+  args: {
+    appearance: "warning",
+    description: "Your session expires in 5 minutes.",
+    title: "Session expiring",
+  },
 };
 
 export const AlertAppearance: Story = {
-  render: () => (
-    <ToastTrigger
-      appearance="alert"
-      description="We could not save your changes. Try again."
-      title="Save failed"
-    />
-  ),
+  args: {
+    appearance: "alert",
+    description: "We could not save your changes. Try again.",
+    title: "Save failed",
+  },
 };
 
 export const Rounded: Story = {
-  render: () => (
-    <ToastTrigger appearance="primary" rounded title="Rounded toast" />
-  ),
+  args: {
+    appearance: "primary",
+    rounded: true,
+    title: "Rounded toast",
+  },
 };

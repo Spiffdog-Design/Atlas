@@ -41,3 +41,30 @@ export type {
   ToastShowOptions,
   ToastUpdateOptions,
 } from "./toast";
+export {
+  Dialog,
+  DialogActions,
+  DialogBackdrop,
+  DialogClose,
+  DialogDescription,
+  DialogIntro,
+  DialogPopup,
+  DialogPortal,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
+  DialogViewport,
+} from "./dialog";
+export type {
+  DialogActionsProps,
+  DialogAppearance,
+  DialogBackdropProps,
+  DialogCloseProps,
+  DialogDescriptionProps,
+  DialogPopupProps,
+  DialogPortalProps,
+  DialogRootProps,
+  DialogTitleProps,
+  DialogTriggerProps,
+  DialogViewportProps,
+} from "./dialog";
