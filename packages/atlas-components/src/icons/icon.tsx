@@ -1,6 +1,6 @@
 import type { LucideIcon, LucideProps } from "lucide-react";
 
-import { normalizeIconSize, normalizeIconStrokeWidth } from "./icon.utils.js";
+import { normalizeIconSize, normalizeIconStrokeWidth } from "./icon.utils";
 
 export interface IconProps extends Omit<LucideProps, "ref"> {
   icon: LucideIcon;

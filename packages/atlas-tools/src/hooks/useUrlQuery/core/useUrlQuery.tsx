@@ -5,9 +5,9 @@ import {
   parseQueryValue,
   serializeQueryValue,
   setSearchParam,
-} from "../../../utilities/urlQuery.utils.js";
-import { useUrlQuerySource } from "./useUrlQuerySource.js";
-import type { UseUrlQueryOptions, UseUrlQuerySetter } from "./useUrlQuery.types.js";
+} from "../../../utilities/urlQuery.utils";
+import { useUrlQuerySource } from "./useUrlQuerySource";
+import type { UseUrlQueryOptions, UseUrlQuerySetter } from "./useUrlQuery.types";
 
 /**
  * Read and write a single URL query parameter.

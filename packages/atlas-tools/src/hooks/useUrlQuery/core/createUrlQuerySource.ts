@@ -1,4 +1,4 @@
-import type { UrlQuerySource, UrlQuerySourceConfig } from "./useUrlQuery.types.js";
+import type { UrlQuerySource, UrlQuerySourceConfig } from "./useUrlQuery.types";
 
 /** No-op subscription for routers that re-render the provider when search changes. */
 export function noopUrlQuerySubscribe(): () => void {

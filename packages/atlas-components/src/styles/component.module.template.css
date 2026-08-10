@@ -10,6 +10,34 @@
  */
 
 @layer components {
+  /*
+   * Field chrome — import shared/form-field.module.css in Field-wrapped components,
+   * or wrap controls with FormField from shared/form-field.tsx.
+   */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .description {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .error {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+  }
+
   .root {
     border: none;
     box-shadow: var(--border-edge, var(--border-edge-default));

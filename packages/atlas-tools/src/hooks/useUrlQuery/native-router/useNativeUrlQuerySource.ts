@@ -1,8 +1,8 @@
 import { useMemo, useSyncExternalStore } from "react";
 
-import { createUrlQuerySource } from "../core/createUrlQuerySource.js";
-import type { UrlQuerySource } from "../core/useUrlQuery.types.js";
-import { createNativeUrlQuerySourceConfig } from "./native.utils.js";
+import { createUrlQuerySource } from "../core/createUrlQuerySource";
+import type { UrlQuerySource } from "../core/useUrlQuery.types";
+import { createNativeUrlQuerySourceConfig } from "./native.utils";
 
 export function useNativeUrlQuerySource(): UrlQuerySource {
   const config = createNativeUrlQuerySourceConfig();

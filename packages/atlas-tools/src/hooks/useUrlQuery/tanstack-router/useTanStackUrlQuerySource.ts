@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
-import { createUrlQuerySource } from "../core/createUrlQuerySource.js";
-import type { UrlQuerySource } from "../core/useUrlQuery.types.js";
-import { queryStringToRecord, searchParamsToQueryString } from "./tanstack.utils.js";
+import { createUrlQuerySource } from "../core/createUrlQuerySource";
+import type { UrlQuerySource } from "../core/useUrlQuery.types";
+import { queryStringToRecord, searchParamsToQueryString } from "./tanstack.utils";
 
 export function useTanStackUrlQuerySource(): UrlQuerySource {
   const search = useSearch({ strict: false }) as Record<string, unknown>;

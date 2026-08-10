@@ -5,7 +5,7 @@ import {
   parseQueryValue,
   serializeQueryValue,
   setSearchParam,
-} from "./urlQuery.utils.js";
+} from "./urlQuery.utils";
 
 describe("getSearchParam", () => {
   it("reads params with or without a leading question mark", () => {

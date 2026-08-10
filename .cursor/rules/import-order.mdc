@@ -11,8 +11,8 @@ Separate import groups with a **blank line** between each. Sort named specifiers
 
 1. **Third-party** — npm packages (`react`, `@base-ui/*`, `@storybook/*`, `vitest`, `classnames`, etc.)
 2. **Workspace packages** — `@spiffdog-design/atlas-components`, `@spiffdog-design/atlas-colors`, other `@spiffdog-design/*` monorepo packages
-3. **Components** — relative UI modules (`./index.js`, `../button/index.js`) — not `*.utils` or styles
-4. **Component utils** — colocated `*.utils` modules (`./button.utils.js`, `../button/button.utils.js`)
+3. **Components** — relative UI modules (`./index`, `../button/index`) — not `*.utils` or styles
+4. **Component utils** — colocated `*.utils` modules (`./button.utils`, `../button/button.utils`)
 5. **Styling** — CSS modules and stylesheets (`*.module.css`, `*.css`) last
 
 ## Examples
@@ -23,9 +23,9 @@ import { useId } from "react";
 
 import { Button } from "@spiffdog-design/atlas-components/button";
 
-import { Label } from "../label/index.js";
+import { Label } from "../label/index";
 
-import { getFieldErrorId } from "./field.utils.js";
+import { getFieldErrorId } from "./field.utils";
 
 import styles from "./field.module.css";
 ```
@@ -33,8 +33,8 @@ import styles from "./field.module.css";
 ```typescript
 // ❌ BAD — styles before utils, utils before components
 import styles from "./field.module.css";
-import { getFieldErrorId } from "./field.utils.js";
-import { Label } from "../label/index.js";
+import { getFieldErrorId } from "./field.utils";
+import { Label } from "../label/index";
 import { useId } from "react";
 ```
 
@@ -43,3 +43,7 @@ import { useId } from "react";
 Run `npm run format` from the repo root, or `npx biome check --write .` in a package. Import groups are configured in `packages/biome-config/base.json` under `assist.actions.source.organizeImports.options.groups`.
 
 Do not import component utils before the components that use them. Do not import styles before utils.
+
+## Relative import paths
+
+Omit file extensions on relative TypeScript imports (`from "./button.utils"`, not `from "./button.utils.js"`). `moduleResolution: "bundler"` resolves `.ts`/`.tsx` sources; compiled output still emits `.js` files.

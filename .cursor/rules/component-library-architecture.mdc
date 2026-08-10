@@ -180,6 +180,7 @@ Token categories in `tokens.css`: `--space-*`, `--control-height-*`, `--font-siz
 
 ### Forms
 
+- **Field composition** — labeled controls use `@base-ui/react/field` via shared `FormField` (`packages/atlas-components/src/shared/form-field.tsx`). Accept `label?`, `description?`, and `error?` on every Field-wrapped component (Input, Checkbox, Select, …). Part order: `Field.Label` → control → `Field.Description` → `Field.Error`. Never use plain `<p>` or `<span>` for helper or error copy — always `Field.Description` / `Field.Error`. Static `error` props use `<Field.Error match>`. Reuse field chrome from `shared/form-field.module.css` (`.field`, `.label`, `.description`, `.error`). Pass Base UI control primitives as `FormField` children so labels and descriptions wire up correctly.
 - Generous hit targets; if visual target &lt;24px, expand to ≥24px via padding
 - Label + control share a single hit target
 - **Never block paste**; validate instead of blocking keystrokes

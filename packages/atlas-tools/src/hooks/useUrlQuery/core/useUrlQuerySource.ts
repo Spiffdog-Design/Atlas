@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
-import { UrlQueryContext } from "./urlQueryContext.js";
-import { MISSING_URL_QUERY_PROVIDER, type UrlQuerySource } from "./useUrlQuery.types.js";
+import { UrlQueryContext } from "./urlQueryContext";
+import { MISSING_URL_QUERY_PROVIDER, type UrlQuerySource } from "./useUrlQuery.types";
 
 /** Resolve an explicit override, context source, or throw when no provider is mounted. */
 export function resolveUrlQuerySource(

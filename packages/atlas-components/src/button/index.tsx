@@ -5,7 +5,7 @@ import {
   getButtonDataAttributes,
   type ButtonAppearance,
   type ButtonVariant,
-} from "./button.utils.js";
+} from "./button.utils";
 
 import styles from "./button.module.css";
 

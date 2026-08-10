@@ -1,5 +1,5 @@
-import { setSearchParam } from "../../../utilities/urlQuery.utils.js";
-import type { SetUrlQueryOptions } from "../core/useUrlQuery.types.js";
+import { setSearchParam } from "../../../utilities/urlQuery.utils";
+import type { SetUrlQueryOptions } from "../core/useUrlQuery.types";
 
 const POP_STATE_EVENT = "popstate";
 

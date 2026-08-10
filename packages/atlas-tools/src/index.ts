@@ -10,4 +10,4 @@ export {
   setSearchParam,
   trimLines,
   unique,
-} from "./utilities/index.js";
+} from "./utilities";

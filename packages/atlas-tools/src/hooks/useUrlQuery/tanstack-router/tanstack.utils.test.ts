@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { queryStringToRecord } from "./tanstack.utils.js";
+import { queryStringToRecord } from "./tanstack.utils";
 
 describe("queryStringToRecord", () => {
   it("parses query strings with or without a leading question mark", () => {

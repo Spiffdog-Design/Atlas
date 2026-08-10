@@ -1,12 +1,12 @@
 import { describe, expect, it, beforeEach, vi } from "vitest";
 
-import { createUrlQuerySource } from "../core/createUrlQuerySource.js";
-import { getSearchParam } from "../../../utilities/urlQuery.utils.js";
+import { createUrlQuerySource } from "../core/createUrlQuerySource";
+import { getSearchParam } from "../../../utilities/urlQuery.utils";
 import {
   createNativeUrlQuerySourceConfig,
   subscribeToNativeSearch,
   writeNativeSearchParam,
-} from "./native.utils.js";
+} from "./native.utils";
 
 type MockLocation = {
   search: string;

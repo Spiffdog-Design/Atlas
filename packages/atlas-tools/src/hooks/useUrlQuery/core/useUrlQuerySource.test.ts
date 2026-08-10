@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { createUrlQuerySource } from "./createUrlQuerySource.js";
-import { resolveUrlQuerySource } from "./useUrlQuerySource.js";
-import { MISSING_URL_QUERY_PROVIDER } from "./useUrlQuery.types.js";
+import { createUrlQuerySource } from "./createUrlQuerySource";
+import { resolveUrlQuerySource } from "./useUrlQuerySource";
+import { MISSING_URL_QUERY_PROVIDER } from "./useUrlQuery.types";
 
 describe("resolveUrlQuerySource", () => {
   it("prefers an explicit source", () => {

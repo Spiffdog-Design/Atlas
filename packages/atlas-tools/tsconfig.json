@@ -1,6 +1,8 @@
 {
   "extends": "@spiffdog-design/typescript-config/react-library.json",
   "compilerOptions": {
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "noEmit": true
   },
   "include": ["src", "src/types/optional-peers.d.ts"]

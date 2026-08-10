@@ -1,6 +1,6 @@
 import { Checkbox as BaseCheckbox } from "@base-ui/react/checkbox";
 
-import { CheckIcon } from "../icons/index.js";
+import { CheckIcon } from "../icons/index";
 
 import styles from "./checkbox.module.css";
 

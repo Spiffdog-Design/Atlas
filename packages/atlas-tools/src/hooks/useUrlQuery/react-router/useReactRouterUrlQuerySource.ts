@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { createUrlQuerySource } from "../core/createUrlQuerySource.js";
-import type { UrlQuerySource } from "../core/useUrlQuery.types.js";
+import { createUrlQuerySource } from "../core/createUrlQuerySource";
+import type { UrlQuerySource } from "../core/useUrlQuery.types";
 
 export function useReactRouterUrlQuerySource(): UrlQuerySource {
   const [searchParams, setSearchParams] = useSearchParams();

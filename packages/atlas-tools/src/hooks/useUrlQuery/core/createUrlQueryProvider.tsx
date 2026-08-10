@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import type { UrlQuerySource } from "./useUrlQuery.types.js";
-import { UrlQueryContext } from "./urlQueryContext.js";
+import type { UrlQuerySource } from "./useUrlQuery.types";
+import { UrlQueryContext } from "./urlQueryContext";
 
 /** Mount a router-specific {@link UrlQuerySource} for child {@link useUrlQuery} calls. */
 export function createUrlQueryProvider(useSource: () => UrlQuerySource) {

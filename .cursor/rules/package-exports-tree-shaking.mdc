@@ -16,7 +16,7 @@ Apply to every **publishable** package under `packages/` (`atlas-tools`, `atlas-
 
 ## Barrel files
 
-- **Named re-exports only** — `export { chunk } from "./array.js"`, not `export *`.
+- **Named re-exports only** — `export { chunk } from "./array"`, not `export *`.
 - **No top-level statements** — barrels are re-export-only; no init code, logging, or side effects.
 - **Do not mix concerns** — never re-export React hooks from utility root entries; keep hooks under `./hooks/*`.
 

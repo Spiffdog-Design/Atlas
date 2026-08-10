@@ -7,15 +7,15 @@ import {
   type LucideProps,
 } from "lucide-react";
 
-import { Icon, type IconProps } from "./icon.js";
+import { Icon, type IconProps } from "./icon";
 
-export { Icon, type IconProps } from "./icon.js";
+export { Icon, type IconProps } from "./icon";
 export {
   DEFAULT_ICON_SIZE,
   DEFAULT_ICON_STROKE_WIDTH,
   normalizeIconSize,
   normalizeIconStrokeWidth,
-} from "./icon.utils.js";
+} from "./icon.utils";
 
 type NamedIconProps = Omit<IconProps, "icon">;
 

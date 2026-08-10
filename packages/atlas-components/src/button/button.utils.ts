@@ -6,7 +6,7 @@ import {
   normalizeAppearance,
   normalizeControlOption,
   normalizeVariant,
-} from "../shared/control-variants.utils.js";
+} from "../shared/control-variants.utils";
 
 export type ButtonAppearance = ControlAppearance;
 export type ButtonVariant = ControlVariant;
