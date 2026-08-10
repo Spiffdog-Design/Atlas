@@ -5,9 +5,9 @@ import {
   Code,
   FieldCheckbox,
   FieldInput,
+  FieldProgressBar,
   FieldSelect,
-  ProgressBar,
-  Slider,
+  FieldSlider,
 } from "./";
 
 const meta = {
@@ -57,15 +57,8 @@ export const AllComponents: Story = {
             placeholder="Choose a plan…"
           />
           <FieldCheckbox label="I agree to the terms of service" />
-          <div style={{ display: "grid", gap: "1rem" }}>
-            <div>
-              <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)" }}>
-                Volume
-              </label>
-              <Slider defaultValue={45} min={0} max={100} />
-            </div>
-            <ProgressBar value={45} />
-          </div>
+          <FieldSlider defaultValue={45} label="Volume" max={100} min={0} />
+          <FieldProgressBar label="Storage used" rounded value={45} />
           <Button appearance="primary" variant="solid">
             Continue
           </Button>

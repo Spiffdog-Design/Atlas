@@ -20,21 +20,23 @@ import {
   Checkbox,
   FieldCheckbox,
   FieldInput,
+  FieldProgressBar,
+  FieldSlider,
   Input,
   Select,
-  Slider,
-  ProgressBar,
 } from "@spiffdog-design/atlas-components";
 import "@spiffdog-design/atlas-colors/index.css";
 import "@spiffdog-design/atlas-components/styles.css";
 ```
 
-Form controls split into **raw controls** (`Input`, `Checkbox`) and **field wrappers** (`FieldInput`, `FieldCheckbox`) with label, description, and error chrome. Use the field wrappers in app forms; use raw controls when composing custom layouts.
+Form controls split into **raw controls** (`Input`, `Checkbox`, `Slider`, `ProgressBar`) and **field wrappers** (`FieldInput`, `FieldCheckbox`, `FieldSlider`, `FieldProgressBar`) with label, description, and error chrome. Use the field wrappers in app forms; use raw controls when composing custom layouts.
 
 ```ts
 import { FieldInput } from "@spiffdog-design/atlas-components/input";
 import { FieldCheckbox } from "@spiffdog-design/atlas-components/checkbox";
 import { FieldSelect } from "@spiffdog-design/atlas-components/select";
+import { FieldSlider } from "@spiffdog-design/atlas-components/slider";
+import { FieldProgressBar } from "@spiffdog-design/atlas-components/progressbar";
 ```
 
 Subpath imports are supported for tree-shaking (preferred over the root barrel):
@@ -88,13 +90,21 @@ packages/atlas-components/src/
 │   ├── field-select.test.tsx
 │   └── *.stories.tsx
 ├── slider/
-│   ├── index.tsx
+│   ├── index.tsx           # Re-exports Slider + FieldSlider
+│   ├── slider.tsx          # Raw control
+│   ├── field-slider.tsx    # Stack field layout
 │   ├── slider.module.css
-│   └── slider.stories.tsx
+│   ├── slider.utils.ts
+│   ├── slider.utils.test.ts
+│   └── *.stories.tsx
 ├── progressbar/
-│   ├── index.tsx
+│   ├── index.tsx           # Re-exports ProgressBar + FieldProgressBar
+│   ├── progressbar.tsx     # Raw control
+│   ├── field-progressbar.tsx
 │   ├── progressbar.module.css
-│   └── progressbar.stories.tsx
+│   ├── progressbar.utils.ts
+│   ├── progressbar.utils.test.ts
+│   └── *.stories.tsx
 ├── styles/
 │   ├── index.css           # Layered global styles entry
 │   ├── tokens.css          # Semantic design tokens

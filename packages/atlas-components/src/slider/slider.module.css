@@ -1,6 +1,8 @@
 @layer components {
   .root {
     width: 100%;
+    --slider-fill: var(--color-primary);
+    --slider-thumb-edge: var(--border-edge-primary);
   }
 
   .control {
@@ -8,7 +10,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding-block: 0.75rem;
+    padding-block: var(--space-3);
     touch-action: none;
     -webkit-user-select: none;
     user-select: none;
@@ -16,7 +18,7 @@
 
   .track {
     width: 100%;
-    height: 0.8rem;
+    height: var(--space-2);
     background: var(--color-border-subtle);
     border-radius: 999px;
     box-shadow: var(--border-edge-inner);
@@ -26,22 +28,56 @@
 
   .indicator {
     height: 100%;
-    background: var(--color-primary);
+    border-radius: inherit;
+    background: var(--slider-fill);
     transition: width 0.2s ease;
   }
 
   .thumb {
-    width: 1.4rem;
-    height: 1.4rem;
+    width: var(--font-size-base);
+    height: var(--font-size-base);
     border-radius: 50%;
     background: var(--color-surface);
     border: none;
-    box-shadow: var(--border-edge-primary), var(--shadow-subtle);
-    transform: translateY(-0.3rem);
+    box-shadow: var(--slider-thumb-edge), var(--shadow-subtle);
+    transform: translateY(calc(var(--space-1) * -1));
   }
 
   .thumb:focus-visible {
     outline: var(--focus-ring);
     outline-offset: var(--focus-ring-offset);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .indicator {
+      transition: none;
+    }
+  }
+}
+
+@layer variants {
+  .root[data-appearance="base"] {
+    --slider-fill: var(--color-base);
+    --slider-thumb-edge: var(--border-edge-default);
+  }
+
+  .root[data-appearance="primary"] {
+    --slider-fill: var(--color-primary);
+    --slider-thumb-edge: var(--border-edge-primary);
+  }
+
+  .root[data-appearance="success"] {
+    --slider-fill: var(--color-success);
+    --slider-thumb-edge: var(--border-edge-success);
+  }
+
+  .root[data-appearance="warning"] {
+    --slider-fill: var(--color-warning);
+    --slider-thumb-edge: var(--border-edge-warning);
+  }
+
+  .root[data-appearance="alert"] {
+    --slider-fill: var(--color-error);
+    --slider-thumb-edge: var(--border-edge-error);
   }
 }
