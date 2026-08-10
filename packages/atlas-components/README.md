@@ -29,11 +29,45 @@ import "@spiffdog-design/atlas-colors/index.css";
 import "@spiffdog-design/atlas-components/styles.css";
 ```
 
-Form controls split into **raw controls** (`Input`, `Checkbox`, `Slider`, `ProgressBar`) and **field wrappers** (`FieldInput`, `FieldCheckbox`, `FieldSlider`, `FieldProgressBar`) with label, description, and error chrome. Use the field wrappers in app forms; use raw controls when composing custom layouts.
+Form controls split into **raw controls** (`Input`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, `ProgressBar`) and **field wrappers** (`FieldInput`, `FieldCheckbox`, `FieldRadioGroup`, `FieldSwitch`, `FieldSlider`, `FieldProgressBar`) with label, description, and error chrome. Use the field wrappers in app forms; use raw controls when composing custom layouts.
+
+**Toast** requires an app-level provider. Wrap your root layout with `ToastProvider`, then call `useToast().show()` from any descendant. For toasts outside the React tree, create a manager with `createToastManager()` and pass it to `ToastProvider` via the `toastManager` prop.
+
+```ts
+import { ToastProvider, useToast } from "@spiffdog-design/atlas-components/toast";
+
+function App() {
+  return (
+    <ToastProvider>
+      <Routes />
+    </ToastProvider>
+  );
+}
+
+function SaveButton() {
+  const toast = useToast();
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        toast.show({
+          appearance: "success",
+          title: "Saved",
+          description: "Your changes were applied.",
+        })
+      }
+    >
+      Save
+    </button>
+  );
+}
+```
 
 ```ts
 import { FieldInput } from "@spiffdog-design/atlas-components/input";
 import { FieldCheckbox } from "@spiffdog-design/atlas-components/checkbox";
+import { FieldRadioGroup } from "@spiffdog-design/atlas-components/radio-group";
+import { FieldSwitch } from "@spiffdog-design/atlas-components/switch";
 import { FieldSelect } from "@spiffdog-design/atlas-components/select";
 import { FieldSlider } from "@spiffdog-design/atlas-components/slider";
 import { FieldProgressBar } from "@spiffdog-design/atlas-components/progressbar";
@@ -45,7 +79,7 @@ Subpath imports are supported for tree-shaking (preferred over the root barrel):
 import { Button } from "@spiffdog-design/atlas-components/button";
 ```
 
-Explicit export paths: `./button`, `./card`, `./code`, `./checkbox`, `./input`, `./slider`, `./progressbar`, `./select`, `./icon`, `./styles.css`.
+Explicit export paths: `./button`, `./card`, `./code`, `./checkbox`, `./input`, `./radio-group`, `./switch`, `./tabs`, `./toast`, `./slider`, `./progressbar`, `./select`, `./icon`, `./styles.css`.
 
 ## Structure
 
@@ -89,6 +123,43 @@ packages/atlas-components/src/
 │   ├── select.test.tsx
 │   ├── field-select.test.tsx
 │   └── *.stories.tsx
+├── radio-group/
+│   ├── index.tsx           # Re-exports RadioGroup + FieldRadioGroup
+│   ├── radio-group.tsx     # Raw control
+│   ├── field-radio-group.tsx
+│   ├── radio-group.module.css
+│   ├── radio-group.utils.ts
+│   ├── radio-group.utils.test.ts
+│   ├── field-radio-group.test.tsx
+│   └── *.stories.tsx
+├── switch/
+│   ├── index.tsx           # Re-exports Switch + FieldSwitch
+│   ├── switch.tsx          # Raw control
+│   ├── field-switch.tsx    # Inline field layout + optional fieldLabel
+│   ├── switch.module.css
+│   ├── field-switch.module.css
+│   ├── switch.utils.ts
+│   ├── switch.utils.test.ts
+│   ├── field-switch.test.tsx
+│   └── *.stories.tsx
+├── tabs/
+│   ├── index.tsx           # Tabs component
+│   ├── tabs.tsx
+│   ├── tabs.module.css
+│   ├── tabs.utils.ts
+│   ├── tabs.utils.test.ts
+│   ├── tabs.test.tsx
+│   └── tabs.stories.tsx
+├── toast/
+│   ├── index.tsx           # ToastProvider, useToast, createToastManager
+│   ├── toast-provider.tsx
+│   ├── toast-list.tsx
+│   ├── use-toast.ts
+│   ├── toast.module.css
+│   ├── toast.utils.ts
+│   ├── toast.utils.test.ts
+│   ├── toast.test.tsx
+│   └── toast.stories.tsx
 ├── slider/
 │   ├── index.tsx           # Re-exports Slider + FieldSlider
 │   ├── slider.tsx          # Raw control

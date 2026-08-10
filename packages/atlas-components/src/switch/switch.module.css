@@ -1,0 +1,101 @@
+@layer components {
+  .switch {
+    box-sizing: border-box;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    width: calc(var(--control-height-sm) * 1.75);
+    height: var(--control-height-sm);
+    padding: var(--space-0-5);
+    margin: 0;
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-text);
+    --border-edge: 0 0 0 1px var(--color-text);
+    box-shadow: var(--border-edge);
+    transition: var(--transition-base);
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    --switch-track-width: calc(var(--control-height-sm) * 1.75);
+    --switch-padding: var(--space-0-5);
+    --switch-thumb-size: calc(var(--control-height-sm) - var(--space-1));
+    --switch-travel: calc(
+      var(--switch-track-width) - (var(--switch-padding) * 2) - var(--switch-thumb-size)
+    );
+  }
+
+  .switch:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .thumb {
+    width: var(--switch-thumb-size);
+    height: var(--switch-thumb-size);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-subtle);
+    transition:
+      translate 0.15s ease-in-out,
+      transform 0.15s ease-in-out,
+      background-color 0.15s ease-in-out;
+  }
+
+  .switch[data-checked] .thumb,
+  .thumb[data-checked] {
+    translate: var(--switch-travel) 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .switch,
+    .thumb {
+      transition: none;
+    }
+  }
+}
+
+@layer variants {
+  .switch[data-rounded],
+  .switch[data-rounded] .thumb {
+    border-radius: 999px;
+  }
+
+  .switch[data-disabled] {
+    --border-edge: var(--border-edge-subtle);
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* Unchecked — edge matches track fill */
+  .switch:not([data-checked]) {
+    --border-edge: 0 0 0 1px var(--color-text);
+    background-color: var(--color-text);
+  }
+
+  .switch[data-appearance="base"][data-checked] {
+    --border-edge: var(--border-edge-default);
+    background-color: var(--color-base);
+  }
+
+  .switch[data-appearance="primary"][data-checked] {
+    --border-edge: var(--border-edge-primary);
+    background-color: var(--color-primary);
+  }
+
+  .switch[data-appearance="success"][data-checked] {
+    --border-edge: var(--border-edge-success);
+    background-color: var(--color-success);
+  }
+
+  .switch[data-appearance="warning"][data-checked] {
+    --border-edge: var(--border-edge-warning);
+    background-color: var(--color-warning);
+  }
+
+  .switch[data-appearance="alert"][data-checked] {
+    --border-edge: var(--border-edge-error);
+    background-color: var(--color-error);
+  }
+}
