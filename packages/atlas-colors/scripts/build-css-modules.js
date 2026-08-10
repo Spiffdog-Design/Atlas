@@ -1,13 +1,13 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { themeToIndexCss } from "./themeToIndexCss.js";
 
-const distIndexPath = require.resolve("../dist/index.js");
-delete require.cache[distIndexPath];
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const { palette } = require(distIndexPath);
-const { themeToIndexCss } = require("./themeToIndexCss");
-
-const outputDir = require("../tsconfig.json").compilerOptions.outDir;
+const outputDir = path.resolve(__dirname, "../dist");
+const { palette } = await import(pathToFileURL(path.resolve(outputDir, "index.mjs")).href);
 
 const indexCss = themeToIndexCss(palette);
 fs.writeFileSync(path.join(outputDir, "index.css"), indexCss);

@@ -32,6 +32,7 @@
     "build": "turbo run build",
     "build:docs": "turbo run build --filter=docs",
     "build:packages": "turbo run build --filter=@spiffdog-design/atlas-*",
+    "build:watch": "turbo run build -- --watch",
     "check-types": "turbo run check-types",
     "dev": "turbo run dev --filter=docs --filter=@spiffdog-design/atlas-*",
     "format": "biome check --write .",
@@ -45,8 +46,5 @@
   },
   "overrides": {
     "uuid": "^11.1.1"
-  },
-  "dependencies": {
-    "use-sync-external-store": "^1.0.0"
   }
 }

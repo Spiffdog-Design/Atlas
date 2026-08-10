@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Select } from "./";
 
 describe("Select", () => {
@@ -10,5 +10,17 @@ describe("Select", () => {
     );
 
     expect(getByRole("combobox")).toBeInTheDocument();
+  });
+
+  it("renders the options list when opened", async () => {
+    render(
+      <Select>
+        <option value="1">One</option>
+      </Select>,
+    );
+
+    fireEvent.click(screen.getByRole("combobox"));
+
+    expect(await screen.findByText("One")).toBeInTheDocument();
   });
 });

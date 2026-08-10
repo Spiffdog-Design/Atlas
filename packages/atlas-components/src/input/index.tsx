@@ -1,4 +1,5 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
+import { Input as BaseInput } from "@base-ui/react/input";
 
 import styles from "./input.module.css";
 
@@ -9,7 +10,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export function Input({ label, className, ...props }: InputProps) {
   const input = (
-    <input
+    <BaseInput
       className={className ? `${styles.input} ${className}` : styles.input}
       {...props}
     />

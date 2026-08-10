@@ -1,7 +1,7 @@
 /**
  * Build helpers: CSS custom property naming and serializing a theme to `dist/index.css`.
  */
-function toCssCasing(str) {
+export function toCssCasing(str) {
   return str
     .replace(/([a-z])(\d)/, "$1-$2")
     .replace(/([A-Z])/g, "-$1")
@@ -13,7 +13,7 @@ function toCssCasing(str) {
  * `color-scheme: light dark` first, then custom properties.
  * @param {Record<string, Record<number, string>>} theme
  */
-function themeToIndexCss(theme) {
+export function themeToIndexCss(theme) {
   const sortedNames = Object.keys(theme).sort();
   const blocks = [];
   for (const name of sortedNames) {
@@ -30,8 +30,3 @@ function themeToIndexCss(theme) {
   const inner = blocks.join("\n\n");
   return `:root {\n\tcolor-scheme: light dark;\n\n${inner}\n}`;
 }
-
-module.exports = {
-  toCssCasing,
-  themeToIndexCss,
-};

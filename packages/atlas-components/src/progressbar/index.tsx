@@ -1,20 +1,22 @@
-import type { HTMLAttributes } from "react";
+import * as React from "react";
+import { Progress as BaseProgress } from "@base-ui/react/progress";
 
 import styles from "./progressbar.module.css";
 
-export interface ProgressBarProps extends HTMLAttributes<HTMLDivElement> {
+export interface ProgressBarProps extends Omit<React.ComponentPropsWithoutRef<typeof BaseProgress.Root>, "children"> {
   value: number;
-  max?: number;
   className?: string;
 }
 
-export function ProgressBar({ value, max = 100, className, ...props }: ProgressBarProps) {
-  const percentage = Math.min(100, Math.max(0, (value / max) * 100));
+export function ProgressBar({ value, className, ...props }: ProgressBarProps) {
+  const rootClassName = className ? `${styles.progress} ${className}` : styles.progress;
 
   return (
-    <div className={className ? `${styles.progress} ${className}` : styles.progress} {...props}>
-      <div className={styles.fill} style={{ width: `${percentage}%` }} />
-    </div>
+    <BaseProgress.Root className={rootClassName} value={Math.max(0, value)} {...props}>
+      <BaseProgress.Track className={styles.track}>
+        <BaseProgress.Indicator className={styles.indicator} />
+      </BaseProgress.Track>
+    </BaseProgress.Root>
   );
 }
 

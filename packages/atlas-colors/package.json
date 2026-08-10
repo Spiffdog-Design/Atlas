@@ -19,7 +19,7 @@
     "./index.css": "./dist/index.css"
   },
   "scripts": {
-    "build": "node ./scripts/prune-dist-typings.js && rollup -c",
+    "build": "node ./scripts/prune-dist-typings.js && rollup -c && node ./scripts/build-css-modules.js",
     "build-css-modules": "node ./scripts/build-css-modules.js",
     "dev": "node ./scripts/prune-dist-typings.js && rollup -c -w",
     "lint": "biome ci .",
