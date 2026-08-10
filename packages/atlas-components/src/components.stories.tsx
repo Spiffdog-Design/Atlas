@@ -33,7 +33,7 @@ export const AllComponents: Story = {
         padding: "2rem",
       }}
     >
-      <Card href="https://example.com" title="Atlas component library">
+      <Card title="Atlas component library">
         Build forms and layouts with shared Atlas components styled using semantic tokens.
       </Card>
 

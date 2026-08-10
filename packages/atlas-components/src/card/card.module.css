@@ -4,21 +4,80 @@
     padding: var(--space-5);
     border-radius: var(--radius-lg);
     border: none;
-    background: var(--color-surface);
     color: var(--color-text);
-    box-shadow: var(--border-edge-subtle), var(--shadow-subtle);
     text-decoration: none;
     transition: var(--transition-base);
   }
 
-  .card h2 {
+  .title {
     margin: 0 0 var(--space-2);
     font-size: var(--font-size-lg);
-    line-height: 1.2;
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    color: var(--card-title-color, var(--color-text));
   }
 
-  .card p {
+  .body {
     margin: 0;
-    color: var(--color-text-muted);
+    line-height: var(--line-height-base);
+    color: var(--card-body-color, var(--color-text-muted));
+  }
+}
+
+@layer variants {
+  .card[data-appearance="base"] {
+    --card-title-color: var(--color-text);
+  }
+
+  .card[data-appearance="primary"] {
+    --card-title-color: var(--color-primary);
+  }
+
+  .card[data-appearance="success"] {
+    --card-title-color: var(--color-success);
+  }
+
+  .card[data-appearance="warning"] {
+    --card-title-color: var(--color-warning);
+  }
+
+  .card[data-appearance="alert"] {
+    --card-title-color: var(--color-error);
+  }
+
+  /* solid — light gray fill; appearance colors title only */
+  .card[data-variant="solid"] {
+    background-color: var(--color-surface-hover);
+    box-shadow: var(--border-edge-subtle), var(--shadow-subtle);
+  }
+
+  /* outline — neutral surface, appearance-tinted edge */
+  .card[data-variant="outline"] {
+    background-color: var(--color-surface);
+    box-shadow: var(--border-edge-default);
+  }
+
+  .card[data-variant="outline"][data-appearance="primary"] {
+    box-shadow: var(--border-edge-primary);
+  }
+
+  .card[data-variant="outline"][data-appearance="success"] {
+    box-shadow: var(--border-edge-success);
+  }
+
+  .card[data-variant="outline"][data-appearance="warning"] {
+    box-shadow: var(--border-edge-warning);
+  }
+
+  .card[data-variant="outline"][data-appearance="alert"] {
+    box-shadow: var(--border-edge-error);
+  }
+
+  /* basic — no surface fill or shadow */
+  .card[data-variant="basic"] {
+    background-color: transparent;
+    box-shadow: none;
   }
 }

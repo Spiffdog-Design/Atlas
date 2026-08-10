@@ -1,15 +1,16 @@
 @layer components {
   .code {
-    font-family: var(--font-family-mono);
-    font-size: 0.95em;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.15rem 0.35rem;
+    box-sizing: border-box;
+    display: inline;
+    padding: var(--space-0-5) var(--space-1);
+    border: none;
     border-radius: var(--radius-sm);
     background: var(--color-surface-hover);
     color: var(--color-text);
-    border: none;
-    box-shadow: var(--border-edge-subtle);
-    line-height: 1.4;
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+    font-variant-numeric: tabular-nums;
+    line-height: var(--line-height-base);
+    box-shadow: var(--border-edge-inner-muted);
   }
 }
