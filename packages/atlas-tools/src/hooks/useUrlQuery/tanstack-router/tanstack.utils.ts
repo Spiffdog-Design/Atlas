@@ -16,7 +16,7 @@ export function searchParamsToQueryString(search: Record<string, unknown>): stri
   const params = new URLSearchParams();
 
   for (const [key, value] of Object.entries(search)) {
-    if (value === null || value === undefined) {
+    if (value == null) {
       continue;
     }
 

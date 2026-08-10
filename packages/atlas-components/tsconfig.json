@@ -6,17 +6,13 @@
     "rootDir": "src",
     "strictNullChecks": true,
     "module": "ES2022",
-    "moduleResolution": "bundler",
-    "baseUrl": ".",
-    "ignoreDeprecations": "5.0"
+    "moduleResolution": "bundler"
   },
   "include": ["src"],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.stories.ts",
-    "**/*.stories.tsx",
-    "**/*.test.ts",
-    "**/*.test.tsx"
+    "**/*.stories.tsx"
   ]
 }

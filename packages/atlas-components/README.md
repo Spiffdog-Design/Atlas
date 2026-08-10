@@ -24,7 +24,7 @@ Subpath imports are supported for tree-shaking (preferred over the root barrel):
 import { Button } from "@spiffdog-design/atlas-components/button";
 ```
 
-Explicit export paths: `./button`, `./card`, `./code`, `./checkbox`, `./input`, `./slider`, `./progressbar`, `./select`, `./styles.css`.
+Explicit export paths: `./button`, `./card`, `./code`, `./checkbox`, `./input`, `./slider`, `./progressbar`, `./select`, `./icon`, `./styles.css`.
 
 ## Structure
 
@@ -80,6 +80,20 @@ npm run generate:component -w @spiffdog-design/atlas-components
 - Components map props to `data-*` attributes; variants are styled in CSS, not toggled in JavaScript.
 - Use semantic tokens (`--color-*`, `--space-*`, `--radius-*`) from `styles/tokens.css`, not raw palette steps.
 - Buttons and other controls also consume hover-specific semantic tokens such as `--color-primary-hover`, `--color-success-hover`, `--color-warning-hover`, and `--color-error-hover`.
+
+## Icons
+
+Icons use [Lucide React](https://lucide.dev/) via a thin `Icon` wrapper with defaults (`size={16}`, `strokeWidth={1.5}`) that inherit the parent `color` through `currentColor`.
+
+```ts
+import { Icon, CheckIcon, CloseIcon } from "@spiffdog-design/atlas-components/icon";
+import { ChevronRight } from "lucide-react";
+
+<CheckIcon />
+<Icon icon={ChevronRight} size={20} strokeWidth={2} />
+```
+
+Named helpers (`CheckIcon`, `CaretUpDownIcon`, `CaretUpIcon`, `CaretDownIcon`, `CloseIcon`) cover common Atlas components. Pass any Lucide icon to `Icon` for one-offs.
 
 ## Scripts
 

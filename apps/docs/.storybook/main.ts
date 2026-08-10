@@ -84,7 +84,7 @@ const config: StorybookConfig = {
       files: "**/*.{mdx,stories.@(ts|tsx)}",
     },
   ],
-  addons: [getAbsolutePath("@storybook/addon-docs")],
+  addons: [getAbsolutePath("@storybook/addon-essentials")],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},

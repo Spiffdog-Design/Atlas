@@ -1,0 +1,16 @@
+---
+description: When executing a multi-step plan, implement one plan todo at a time and pause for user validation before continuing
+alwaysApply: true
+---
+
+# Plan execution — pause between steps
+
+When the user asks to **execute a plan** (with or without an explicit pause request):
+
+1. **One todo per turn** — Complete a single plan todo (or one clearly scoped step from the plan) before stopping.
+2. **Pause for validation** — After that step, stop and summarize what changed, which files were touched, and how to validate. Ask the user to confirm before starting the next step.
+3. **Do not batch** — Do not implement multiple plan todos in one turn unless the user explicitly says to continue without pausing or to run several steps in one go.
+4. **Track progress** — Mark the completed todo in the plan frontmatter when the user accepts the step or asks to continue.
+5. **Order** — Follow the plan’s todo order unless the user redirects.
+
+If a step depends on a prior step, ensure the prior step was validated or explicitly skipped by the user before proceeding.

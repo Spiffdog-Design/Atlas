@@ -3,10 +3,10 @@
     display: block;
     padding: var(--space-5);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border-subtle);
+    border: none;
     background: var(--color-surface);
     color: var(--color-text);
-    box-shadow: var(--shadow-subtle);
+    box-shadow: var(--border-edge-subtle), var(--shadow-subtle);
     text-decoration: none;
     transition: var(--transition-base);
   }

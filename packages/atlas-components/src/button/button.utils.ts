@@ -1,31 +1,18 @@
-import { normalizeValue } from "@spiffdog-design/atlas-tools";
+import {
+  type ControlAppearance,
+  type ControlDataAttributesOptions,
+  type ControlVariant,
+  getControlDataAttributes,
+  normalizeAppearance,
+  normalizeControlOption,
+  normalizeVariant,
+} from "../shared/control-variants.utils.js";
 
-export type ButtonAppearance = "alert" | "base" | "primary" | "success" | "warning";
-export type ButtonVariant = "basic" | "solid" | "outline";
+export type ButtonAppearance = ControlAppearance;
+export type ButtonVariant = ControlVariant;
+export type ButtonDataAttributesOptions = ControlDataAttributesOptions;
 
-export interface ButtonDataAttributesOptions {
-  appearance?: ButtonAppearance;
-  variant?: ButtonVariant;
-  rounded?: boolean;
-  disabled?: boolean;
-}
-
-export function normalizeButtonOption<T>(
-  value: T | undefined,
-  fallback: T,
-): T {
-  return normalizeValue(value, fallback);
-}
-
-export function normalizeButtonAppearance(
-  appearance?: ButtonAppearance,
-): ButtonAppearance {
-  return normalizeButtonOption(appearance, "base");
-}
-
-export function normalizeButtonVariant(
-  variant?: ButtonVariant,
-): ButtonVariant {
-  return normalizeButtonOption(variant, "solid");
-}
-
+export const normalizeButtonOption = normalizeControlOption;
+export const normalizeButtonAppearance = normalizeAppearance;
+export const normalizeButtonVariant = normalizeVariant;
+export const getButtonDataAttributes = getControlDataAttributes;

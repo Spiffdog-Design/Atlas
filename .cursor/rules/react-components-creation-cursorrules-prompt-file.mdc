@@ -9,9 +9,11 @@ alwaysApply: false
 
 1. Carefully consider the component's purpose, functionality, and design
 
-2. Prefer native HTML and CSS behaviors.  Lightly augment with Javascript to fill functionality gaps.
-    - Prefer data attributes for styling (e.g.  `data-variant="basic"`, `"data-rounded="true"`)
-    - Data attributes only mirror styling props.  They do not mirror user input or other data.
+2. Prefer native HTML and CSS behaviors. Lightly augment with Javascript to fill functionality gaps.
+    - Use `data-*` **only for styling variants** (e.g. `data-appearance="primary"`, `data-variant="outline"`, `data-rounded="true"` when rounded)
+    - **Never emit `data-*="false"`** — omit inactive styling flags so CSS defaults apply
+    - **Do not mirror behavior/state in `data-*`** — use native attributes (`disabled`, `required`, …) and ARIA (`aria-label`, `aria-invalid`, …) instead
+    - Data attributes mirror styling props only, not user input or component state
 
 3. Think slowly, step by step, and outline your reasoning
 

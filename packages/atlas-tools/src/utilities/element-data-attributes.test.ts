@@ -20,10 +20,9 @@ describe("buildDataAttributes", () => {
     });
   });
 
-  it("skips nullish values and stringifies others", () => {
-    expect(buildDataAttributes({ appearance: "alert", disabled: false, label: undefined })).toEqual({
+  it("skips nullish values and false booleans", () => {
+    expect(buildDataAttributes({ appearance: "alert", rounded: false, label: undefined })).toEqual({
       "data-appearance": "alert",
-      "data-disabled": "false",
     });
   });
 });

@@ -14,18 +14,18 @@
   .input {
     min-height: var(--control-height-md);
     padding: 0 var(--space-4);
-    border: 1px solid var(--color-border);
+    border: none;
     border-radius: var(--radius-md);
     background: var(--color-surface);
     color: var(--color-text);
-    box-shadow: inset 0 0 0 1px rgba(34, 36, 38, 0.15);
+    box-shadow: var(--border-edge, var(--border-edge-default));
     transition: var(--transition-base);
   }
 
   .input:focus-visible {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: inset 0 0 0 1px rgba(34, 36, 38, 0.15), 0 0 0 2px var(--color-focus-ring);
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    --border-edge: var(--border-edge-primary);
   }
 
   .input::placeholder {
@@ -36,6 +36,6 @@
     opacity: var(--opacity-disabled);
     background: var(--color-surface-hover);
     cursor: not-allowed;
-    box-shadow: inset 0 0 0 1px rgba(34, 36, 38, 0.08);
+    --border-edge: var(--border-edge-inner-muted);
   }
 }

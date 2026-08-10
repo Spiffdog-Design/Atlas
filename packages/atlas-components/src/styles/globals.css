@@ -4,10 +4,19 @@
   }
 
   body {
+    position: relative;
     font-family: var(--font-family-sans);
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
     color: var(--color-text);
     background: var(--color-bg);
+  }
+
+  /*
+   * Portal stacking context for Base UI popups (Select, Dialog, Toast, etc.).
+   * Wrap the app root in this class — see Base UI quick start.
+   */
+  .atlas-root {
+    isolation: isolate;
   }
 }

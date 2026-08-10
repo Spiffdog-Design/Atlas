@@ -80,9 +80,29 @@
 
     /* Interaction */
     --transition-base:
-      background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-      box-shadow 0.15s ease-in-out, color 0.15s ease-in-out, transform 0.15s ease-in-out;
-    --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.03);
-    --shadow-raised: 0 2px 4px rgba(0, 0, 0, 0.08);
+      background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+      color 0.15s ease-in-out, transform 0.15s ease-in-out;
+
+    /*
+     * Border edges — 1px rings via box-shadow (not border) for clean rounded corners.
+     * Override per component/state with --border-edge; stack elevation shadows separately.
+     */
+    --border-edge: 0 0 0 1px color-mix(in oklch, var(--gray1) 8%, transparent);
+    --border-edge-default: 0 0 0 1px var(--color-border);
+    --border-edge-subtle: 0 0 0 1px var(--color-border-subtle);
+    --border-edge-primary: 0 0 0 1px var(--color-primary-border);
+    --border-edge-success: 0 0 0 1px var(--color-success-hover);
+    --border-edge-warning: 0 0 0 1px var(--color-warning-hover);
+    --border-edge-error: 0 0 0 1px var(--color-error-border);
+    --border-edge-inner: inset 0 0 0 1px color-mix(in oklch, var(--gray1) 8%, transparent);
+    --border-edge-inner-muted: inset 0 0 0 1px color-mix(in oklch, var(--gray1) 4%, transparent);
+
+    /* Shadows — OKLCh mixes against palette-backed tokens */
+    --shadow-border-inner: var(--border-edge);
+    --shadow-subtle: 0 1px 2px color-mix(in oklch, var(--gray1) 3%, transparent);
+    --shadow-raised: 0 2px 4px color-mix(in oklch, var(--gray1) 8%, transparent);
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--gray1) 4%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--gray1) 6%, transparent);
+    --shadow-float: var(--shadow-float-direct), var(--shadow-float-ambient);
   }
 }

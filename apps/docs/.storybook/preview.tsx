@@ -6,6 +6,13 @@ import "@spiffdog-design/atlas-components/styles/index.css";
 import "./preview.css";
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <div className="atlas-root">
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     controls: {
       matchers: {

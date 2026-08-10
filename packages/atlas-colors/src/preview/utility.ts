@@ -23,7 +23,7 @@ export const PALETTE_DISPLAY_ORDER = [
 
 /** @param {readonly string[]} names */
 export function getOrderedPaletteNames(names: readonly string[]) {
-  const order = new Map(
+  const order = new Map<string, number>(
     PALETTE_DISPLAY_ORDER.map((name, index) => [name, index]),
   );
 

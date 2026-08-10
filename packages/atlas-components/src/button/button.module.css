@@ -1,44 +1,209 @@
-.button {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-  height: var(--control-height-md);
-  padding: 0 var(--space-5);
-  margin: none;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-surface);
-  font-family: inherit;
-  font-size: var(--font-size-base);
-  font-weight: 400;
-  line-height: 1;
-  white-space: nowrap;
-  color: var(--color-text);
-  -webkit-user-select: none;
-  user-select: none;
-  @media (hover: hover) {
-    &:hover:not([data-disabled]) {
-      background-color: var(--color-base-hover);
-      color: var(--color-base-text);
-    }
+@layer components {
+  .button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    height: var(--control-height-md);
+    padding: 0 var(--space-5);
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: var(--transition-base);
+    box-shadow: var(--border-edge, var(--shadow-border-inner));
+    -webkit-user-select: none;
+    user-select: none;
   }
 
-  &:active:not([data-disabled]) {
+  .button:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+@layer variants {
+  .button[data-rounded="true"] {
+    border-radius: var(--radius-lg);
+  }
+
+  .button[data-appearance][data-variant]:disabled {
+    --border-edge: var(--border-edge-subtle);
+    color: var(--color-text-muted);
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .button[data-variant="basic"]:disabled {
+    box-shadow: none;
+  }
+
+  /* base */
+  .button[data-appearance="base"][data-variant="solid"] {
+    --border-edge: var(--border-edge-default);
     background-color: var(--color-base);
     color: var(--color-base-text);
   }
 
-  &[data-disabled] {
-    color: var(--color-text-muted);
-    border-color: var(--color-border-subtle);
-    opacity: var(--opacity-disabled);
-    pointer-events: none;
+  .button[data-appearance="base"][data-variant="solid"]:hover:not(:disabled) {
+    background-color: var(--color-base-hover);
+    color: var(--color-base-text);
   }
 
-  &:focus-visible {
-    outline: var(--focus-ring);
-    outline-offset: var(--focus-ring-offset);
+  .button[data-appearance="base"][data-variant="solid"]:active:not(:disabled) {
+    background-color: var(--color-base);
+    color: var(--color-base-text);
+  }
+
+  .button[data-appearance="base"][data-variant="outline"] {
+    --border-edge: var(--border-edge-default);
+    background-color: transparent;
+    color: var(--color-text);
+  }
+
+  .button[data-appearance="base"][data-variant="outline"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--gray1) 16%, transparent);
+  }
+
+  .button[data-appearance="base"][data-variant="basic"] {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--color-text);
+  }
+
+  .button[data-appearance="base"][data-variant="basic"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--gray1) 16%, transparent);
+  }
+
+  /* primary */
+  .button[data-appearance="primary"][data-variant="solid"] {
+    --border-edge: var(--border-edge-primary);
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+  }
+
+  .button[data-appearance="primary"][data-variant="solid"]:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+
+  .button[data-appearance="primary"][data-variant="outline"] {
+    --border-edge: var(--border-edge-primary);
+    background-color: transparent;
+    color: var(--color-primary);
+  }
+
+  .button[data-appearance="primary"][data-variant="outline"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--color-primary) 24%, transparent);
+  }
+
+  .button[data-appearance="primary"][data-variant="basic"] {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--color-primary);
+  }
+
+  .button[data-appearance="primary"][data-variant="basic"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--color-primary) 24%, transparent);
+  }
+
+  /* success */
+  .button[data-appearance="success"][data-variant="solid"] {
+    --border-edge: var(--border-edge-success);
+    background-color: var(--color-success);
+    color: var(--color-success-text);
+  }
+
+  .button[data-appearance="success"][data-variant="solid"]:hover:not(:disabled) {
+    background-color: var(--color-success-hover);
+  }
+
+  .button[data-appearance="success"][data-variant="outline"] {
+    --border-edge: var(--border-edge-success);
+    background-color: transparent;
+    color: var(--color-success);
+  }
+
+  .button[data-appearance="success"][data-variant="outline"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--color-success) 24%, transparent);
+  }
+
+  .button[data-appearance="success"][data-variant="basic"] {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--color-success);
+  }
+
+  .button[data-appearance="success"][data-variant="basic"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--color-success) 24%, transparent);
+  }
+
+  /* warning */
+  .button[data-appearance="warning"][data-variant="solid"] {
+    --border-edge: var(--border-edge-warning);
+    background-color: var(--color-warning);
+    color: var(--color-warning-text);
+  }
+
+  .button[data-appearance="warning"][data-variant="solid"]:hover:not(:disabled) {
+    background-color: var(--color-warning-hover);
+  }
+
+  .button[data-appearance="warning"][data-variant="outline"] {
+    --border-edge: var(--border-edge-warning);
+    background-color: transparent;
+    color: var(--color-warning);
+  }
+
+  .button[data-appearance="warning"][data-variant="outline"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--color-warning) 24%, transparent);
+  }
+
+  .button[data-appearance="warning"][data-variant="basic"] {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--color-warning);
+  }
+
+  .button[data-appearance="warning"][data-variant="basic"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--color-warning) 24%, transparent);
+  }
+
+  /* alert */
+  .button[data-appearance="alert"][data-variant="solid"] {
+    --border-edge: var(--border-edge-error);
+    background-color: var(--color-error);
+    color: var(--color-error-text);
+  }
+
+  .button[data-appearance="alert"][data-variant="solid"]:hover:not(:disabled) {
+    background-color: var(--color-error-hover);
+  }
+
+  .button[data-appearance="alert"][data-variant="outline"] {
+    --border-edge: var(--border-edge-error);
+    background-color: transparent;
+    color: var(--color-error);
+  }
+
+  .button[data-appearance="alert"][data-variant="outline"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--color-error) 24%, transparent);
+  }
+
+  .button[data-appearance="alert"][data-variant="basic"] {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--color-error);
+  }
+
+  .button[data-appearance="alert"][data-variant="basic"]:hover:not(:disabled) {
+    background-color: color-mix(in oklch, var(--color-error) 24%, transparent);
   }
 }

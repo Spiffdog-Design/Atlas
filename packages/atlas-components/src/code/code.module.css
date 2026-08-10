@@ -8,7 +8,8 @@
     border-radius: var(--radius-sm);
     background: var(--color-surface-hover);
     color: var(--color-text);
-    border: 1px solid var(--color-border-subtle);
+    border: none;
+    box-shadow: var(--border-edge-subtle);
     line-height: 1.4;
   }
 }

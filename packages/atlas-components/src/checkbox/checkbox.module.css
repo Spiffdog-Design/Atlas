@@ -21,14 +21,16 @@
   justify-content: center;
   padding: 0;
   margin: 0;
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: 0;
   background-color: var(--color-surface);
   color: transparent;
+  box-shadow: var(--border-edge, var(--border-edge-default));
+  transition: var(--transition-base);
 
   &[data-checked],
   &[data-indeterminate] {
-    border-color: var(--color-primary);
+    --border-edge: var(--border-edge-primary);
     background-color: var(--color-primary);
     color: var(--color-primary-text);
   }

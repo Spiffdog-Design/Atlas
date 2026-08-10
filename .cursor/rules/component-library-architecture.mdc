@@ -35,7 +35,7 @@ Storybook resolves package imports via Vite aliases in `apps/docs/.storybook/mai
 
 Restrained monochrome: near-white canvas (`--color-bg` / `--gray11`), near-black text (`--color-text` / `--gray1`). Every element earns its placement — minimalism as engineering principle, not decoration.
 
-- **Shadow-as-border** — prefer layered `box-shadow` over heavy `border` on cards and inputs for crisp edges and subtle depth
+- **Border-edge rings** — use `--border-edge` box-shadow rings instead of `1px border` on all shared components (cleaner rounded corners); stack elevation shadows separately
 - **Optical alignment** — ±1px nudge when perception beats geometry
 - Set `<meta name="theme-color">` to match page background; rely on `color-scheme: light dark` on `:root`
 
@@ -87,18 +87,29 @@ Per hook (`packages/atlas-tools/src/hooks/{name}/`): TSDoc on hook and providers
    | *(unlayered)* | consumer app `*.module.css`, ad-hoc UI tweaks | **highest** |
 
 2. **CSS Modules** for all component styles. Global CSS only via layered imports in `styles/index.css`. Storybook uses `localsConvention: "camelCaseOnly"`.
-3. **Data-attributes for variants** — map props to `data-*` on the DOM; style in `@layer variants`. No prop-driven conditional class names in JS.
-4. **Headless UI state** — style via `[data-disabled]`, `[data-checked]`, `[data-highlighted]` in `@layer variants`, not `className` callbacks.
-5. **Static classes only in JS** — join `styles.root` and passthrough `className`; no variant toggles in JS.
-6. **Use tokens** from `styles/tokens.css` for spacing, sizing, color, radius, and typography.
-7. **Shadow-border over borders** for cards, inputs, and elevated surfaces:
+3. **Data-attributes for styling variants only** — map **styling props** (`appearance`, `variant`, affirmative booleans like `rounded`) to `data-*` in `@layer variants`. **Never emit `data-*="false"`** — omit the attribute when inactive so CSS defaults apply cleanly.
+4. **Prefer native and ARIA attributes for behavior/state** — use `disabled`, `required`, `checked`, `aria-*`, etc. on the DOM element instead of mirroring them in `data-*`. Do not set `data-disabled` on Atlas wrappers; style native `:disabled` (or `:checked`, `:invalid`, …) where the platform provides it.
+5. **Headless UI library state** — when `@base-ui/react` sets `data-disabled`, `data-checked`, `data-highlighted`, etc., style those selectors in `@layer variants`; do not duplicate the same state with Atlas-owned `data-*` props.
+6. **Static classes only in JS** — join `styles.root` and passthrough `className`; no variant toggles in JS.
+7. **Use tokens** from `styles/tokens.css` for spacing, sizing, color, radius, and typography.
+8. **Border-edge over `border`** — never use `1px solid` for component outlines. Set `border: none` and draw edges with box-shadow via `--border-edge` tokens from `tokens.css`:
    ```css
-   box-shadow:
-     0 0 0 1px color-mix(in oklab, var(--gray1) 8%, transparent),
-     0 2px 2px color-mix(in oklab, var(--gray1) 4%, transparent),
-     0 0 0 1px var(--gray11);
+   .root {
+     border: none;
+     box-shadow: var(--border-edge, var(--border-edge-default));
+   }
+
+   .root[data-variant="outline"] {
+     --border-edge: var(--border-edge-primary);
+   }
+
+   .root:disabled {
+     --border-edge: var(--border-edge-subtle);
+   }
    ```
-8. **Nested radii** — child `border-radius` ≤ parent; concentric curves.
+   Preset tokens: `--border-edge` (neutral mix), `--border-edge-default`, `--border-edge-subtle`, `--border-edge-primary`, `--border-edge-inner` (inset tracks/wells). Override `--border-edge` per variant/state; stack `--shadow-subtle` / `--shadow-float` as separate comma-separated layers — do not merge focus into edge shadow.
+9. **Focus rings stay on `outline`** — `:focus-visible` uses `outline: var(--focus-ring)` + `outline-offset: var(--focus-ring-offset)`, not a second box-shadow layer (unless a component already documents an exception).
+10. **Nested radii** — child `border-radius` ≤ parent; concentric curves.
 
 ## Typography
 
@@ -144,22 +155,25 @@ See `design-philosophy` for Storybook copy tone.
 | Console purple | `--violet6` |
 | Console pink | `--ruby6` |
 | Inner highlight (shadow stack) | `--gray11` |
-| Subtle border (shadow ring) | `color-mix(in oklab, var(--gray1) 8%, transparent)` |
+| Border edge (neutral ring) | `--border-edge` |
+| Border edge (semantic) | `--border-edge-default`, `--border-edge-subtle`, `--border-edge-primary`, `--border-edge-success`, `--border-edge-warning`, `--border-edge-error` |
+| Inset well edge | `--border-edge-inner`, `--border-edge-inner-muted` |
 
 Interactive states: `:hover`, `:active`, `:focus-visible` must increase contrast vs rest; never rely on color alone — include text labels.
 
 **Rem scale**: `html { font-size: 62.5%; }` → **1rem = 10px**.
 
-Token categories in `tokens.css`: `--space-*`, `--control-height-*`, `--font-size-*`, `--radius-*`, `--color-*`, `--focus-ring`.
+Token categories in `tokens.css`: `--space-*`, `--control-height-*`, `--font-size-*`, `--radius-*`, `--color-*`, `--border-edge*`, `--focus-ring`.
 
-- Padding/margin/gap → `--space-*`; colors → `--color-*`; radius → `--radius-*`
-- **OK to hardcode**: `1px` borders, `2px` outline width, `999px` pill radius, `0`/`100%`/`fit-content`
+- Padding/margin/gap → `--space-*`; colors → `--color-*`; radius → `--radius-*`; edges → `--border-edge*`
+- **OK to hardcode**: `2px` outline width, `999px` pill radius, `0`/`100%`/`fit-content`
+- **Do not** use `border: 1px solid` on shared components — use `--border-edge` tokens
 - **Do not** duplicate token values as literals — add to `tokens.css` when reused
 
 ## Depth, elevation, and borders
 
-- Two-layer shadows (ambient + direct) for elevation
-- Prefer shadow-border stack over heavy borders (see Styling rules)
+- Two-layer shadows (ambient + direct) for elevation — `--shadow-float`, `--shadow-subtle`, `--shadow-raised`
+- Component outlines → `--border-edge*` rings (`border: none`); elevation shadows are separate layers in `box-shadow`
 - Nested radii: child radius ≤ parent radius
 
 ## Components and interactions
@@ -240,6 +254,7 @@ React components are **thin adapters**: correct semantic markup, `data-*`/native
 ## Accessibility
 
 - Mandatory `:focus-visible` ring via `--focus-ring`; never `outline: none` without replacement; use `:focus-within` for groups
+- Set required **ARIA and native attributes** on the correct element (`aria-label`, `aria-labelledby`, `aria-describedby`, `aria-invalid`, `aria-expanded`, `disabled`, `required`, …) — do not replace them with custom `data-*` mirrors
 - Icon-only buttons: `aria-label`; images: meaningful `alt` or `alt=""`; decorative icons: `aria-hidden="true"`
 - Async updates: `aria-live="polite"` for toasts, loading, inline validation
 - i18n: `translate="no"` on brand/code tokens; `Intl.*` for dates and numbers
@@ -270,7 +285,7 @@ Also required for every shared component: `*.stories.tsx`. Optional: `*.test.tsx
 
 **Example prompts**
 
-- *"Create a hero section. Headline uses `--font-size-display` clamp, `text-wrap: balance`, modest negative letter-spacing. CTA is native `<button>`, keeps label but shows spinner on submit. Card uses shadow-border stack from tokens."*
+- *"Create a hero section. Headline uses `--font-size-display` clamp, `text-wrap: balance`, modest negative letter-spacing. CTA is native `<button>`, keeps label but shows spinner on submit. Card uses `--border-edge-subtle` + `--shadow-subtle`."*
 - *"Build an API key input. Explicit `<label>`, `font-size: 1.6rem`, autocomplete='off', placeholder ending in '…', allows paste. Focus uses `--focus-ring`."*
 - *"Design a card grid. Cards use multi-layer shadow tokens. Wrap routable cards in `<a href>`. Persist filter tab in URL via `useUrlQuery`."*
 

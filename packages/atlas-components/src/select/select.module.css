@@ -19,7 +19,7 @@
     min-height: var(--control-height-md);
     width: 100%;
     padding: 0 var(--space-4);
-    border: 1px solid var(--color-border);
+    border: none;
     border-radius: var(--radius-md);
     background: var(--color-surface);
     color: var(--color-text);
@@ -28,17 +28,17 @@
     justify-content: space-between;
     gap: var(--space-3);
     cursor: pointer;
-    box-shadow: inset 0 0 0 1px rgba(34, 36, 38, 0.15);
+    box-shadow: var(--border-edge, var(--border-edge-default));
     transition: var(--transition-base);
   }
 
   .trigger:hover {
-    border-color: var(--color-primary);
+    --border-edge: var(--border-edge-primary);
   }
 
   .trigger:focus-visible {
-    outline: none;
-    box-shadow: inset 0 0 0 1px rgba(34, 36, 38, 0.15), 0 0 0 2px var(--color-focus-ring);
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
   }
 
   .value {
@@ -69,11 +69,11 @@
   }
 
   .popup {
-    min-width: calc(100% - 2px);
+    min-width: 100%;
     background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    border: none;
     border-radius: var(--radius-md);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--border-edge-default), var(--shadow-float);
     overflow: hidden;
   }
 

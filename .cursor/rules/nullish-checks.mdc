@@ -1,0 +1,43 @@
+---
+description: Prefer value != null / value == null for nullish checks (not general loose equality)
+alwaysApply: true
+---
+
+# Nullish checks
+
+Use loose equality **only** when testing both `null` and `undefined` together. This is an intentional exception to strict equality elsewhere.
+
+| Intent | Prefer | Avoid |
+|--------|--------|-------|
+| Value is present (not nullish) | `value != null` | `value !== undefined && value !== null` |
+| Value is absent (nullish) | `value == null` | `value === null \|\| value === undefined` |
+| Default when nullish | `value ?? fallback` | (unchanged — keep using nullish coalescing) |
+
+## When to use
+
+- Filtering or skipping optional values
+- Early returns when a param is missing
+- Guards before reading a property that may be unset
+
+## When not to use
+
+- Do **not** use loose equality for any other comparison (strings, numbers, booleans, objects).
+- When **`null` and `undefined` must be handled differently**, keep explicit checks.
+
+## Examples
+
+```typescript
+// ✅ GOOD
+.filter(([, value]) => value != null && value !== false)
+
+if (value == null) {
+  return defaultValue;
+}
+
+// ❌ BAD — verbose equivalent
+.filter(([, value]) => value !== undefined && value !== null && value !== false)
+
+if (value === null || value === undefined) {
+  return defaultValue;
+}
+```

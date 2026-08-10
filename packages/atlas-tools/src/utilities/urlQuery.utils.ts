@@ -40,7 +40,7 @@ export function serializeQueryValue(
   value: unknown,
   serialize?: (value: unknown) => string,
 ): string | null {
-  if (value === null || value === undefined) {
+  if (value == null) {
     return null;
   }
 

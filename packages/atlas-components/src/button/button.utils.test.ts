@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { buildDataAttributes } from "@spiffdog-design/atlas-tools";
 
 import {
+  getButtonDataAttributes,
   normalizeButtonAppearance,
   normalizeButtonOption,
   normalizeButtonVariant,
@@ -37,19 +38,18 @@ describe("normalizeButtonVariant", () => {
   });
 });
 
-describe("buildDataAttributes", () => {
-  it("builds data attributes from a generic object", () => {
-    expect(buildDataAttributes({ variant: "outline", rounded: true })).toEqual({
+describe("getButtonDataAttributes", () => {
+  it("builds styling data attributes without false booleans", () => {
+    expect(getButtonDataAttributes({ variant: "outline", rounded: true })).toEqual({
+      "data-appearance": "base",
       "data-variant": "outline",
       "data-rounded": "true",
     });
   });
-});
 
-describe("buildDataAttributes", () => {
-  it("builds default data attributes", () => {
+  it("omits rounded when false", () => {
     expect(
-      buildDataAttributes({
+      getButtonDataAttributes({
         appearance: "base",
         variant: "solid",
         rounded: false,
@@ -57,23 +57,15 @@ describe("buildDataAttributes", () => {
     ).toEqual({
       "data-appearance": "base",
       "data-variant": "solid",
-      "data-rounded": "false",
     });
   });
+});
 
-  it("builds data attributes for all options", () => {
-    expect(
-      buildDataAttributes({
-        appearance: "success",
-        variant: "outline",
-        rounded: true,
-        disabled: true,
-      }),
-    ).toEqual({
-      "data-appearance": "success",
+describe("buildDataAttributes", () => {
+  it("builds data attributes from a generic object", () => {
+    expect(buildDataAttributes({ variant: "outline", rounded: true })).toEqual({
       "data-variant": "outline",
       "data-rounded": "true",
-      "data-disabled": "true",
     });
   });
 });

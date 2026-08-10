@@ -2,23 +2,82 @@
  * Shared component CSS Module template — copy when adding components.
  *
  * @layer components  — structural layout, typography, borders
- * @layer variants    — data-* props, headless UI state ([data-disabled], etc.)
+ * @layer variants    — styling data-* props (affirmative only), native/headless state
  *
  * Consumer app *.module.css files stay UNLAYERED for top cascade priority.
+ *
+ * Color mixes use OKLCh to match atlas-colors palette tokens.
  */
 
 @layer components {
   .root {
-    /* structural styles */
+    border: none;
+    box-shadow: var(--border-edge, var(--border-edge-default));
+  }
+
+  /* Floating panel base — copy .popup onto portaled surfaces (Select, Dialog, Toast) */
+  .popup {
+    border: none;
+    box-shadow: var(--border-edge-default), var(--shadow-float);
   }
 }
 
 @layer variants {
-  .root[data-variant="primary"] {
-    /* variant styles */
+  /* Control appearance × variant × rounded — scope .root to your component class */
+  .root[data-appearance="base"][data-variant="solid"] {
+    --border-edge: var(--border-edge-default);
+    background-color: var(--color-base);
+    color: var(--color-base-text);
   }
 
-  .root[data-disabled] {
-    /* headless UI / disabled state */
+  .root[data-appearance="primary"][data-variant="solid"] {
+    --border-edge: var(--border-edge-primary);
+    /* --color-primary fills */
+  }
+
+  .root[data-rounded="true"] {
+    border-radius: var(--radius-lg);
+  }
+
+  .root:disabled {
+    --border-edge: var(--border-edge-subtle);
+    opacity: var(--opacity-disabled);
+    pointer-events: none;
+  }
+
+  /* Headless UI library state (set by @base-ui/react, not Atlas wrappers): [data-checked], [data-highlighted], etc. */
+
+  /*
+   * Appearance-tinted float shadows — apply data-appearance on .popup only.
+   * Border edge ring stays separate; outer drop shadow tints.
+   */
+  .popup[data-appearance="base"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--gray1) 4%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--gray1) 6%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="primary"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--color-primary) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--color-primary) 14%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="success"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--color-success) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--color-success) 14%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="warning"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--color-warning) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--color-warning) 14%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
+  }
+
+  .popup[data-appearance="alert"] {
+    --shadow-float-direct: 0 2px 8px color-mix(in oklch, var(--color-error) 10%, transparent);
+    --shadow-float-ambient: 0 8px 24px color-mix(in oklch, var(--color-error) 14%, transparent);
+    box-shadow: var(--border-edge-default), var(--shadow-float-direct), var(--shadow-float-ambient);
   }
 }

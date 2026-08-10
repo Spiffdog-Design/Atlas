@@ -14,10 +14,10 @@ export function buildDataAttributes<T extends Record<string, DataAttributeValue>
 ): DataAttributeMap<T> {
   return Object.fromEntries(
     Object.entries(attributes)
-      .filter(([, value]) => value !== undefined && value !== null)
+      .filter(([, value]) => value != null && value !== false)
       .map(([key, value]) => [
         `data-${key}`,
-        typeof value === "boolean" ? (value ? "true" : "false") : String(value),
+        typeof value === "boolean" ? "true" : String(value),
       ]),
   ) as DataAttributeMap<T>;
 }
