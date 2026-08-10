@@ -48,3 +48,7 @@ npm run check-types -w docs
 - **MDX guides** — add files under `stories/` or `stories/colors/`
 
 Story titles follow `atlas components/{type}/{Name}` and `atlas colors/{Name}`. Use `base/` for raw controls, `field/` for field wrappers (`FieldInput`, `FieldCheckbox`), and `set/` for combined previews.
+
+The Canvas **Code** panel is enabled globally (`parameters.docs.codePanel` in `.storybook/preview.tsx`). For live snippets that update with Controls, set `component` on the story meta and drive the demo with `args` (avoid bare `render: () =>` without args).
+
+**Live Code Editor** (`storybook-addon-code-editor`) adds a **Live Code Editor** addon tab on stories wired with `atlasLiveEditStory()` and a colocated `*.stories.source.tsx` file. Edit JSX/TSX in Monaco and the canvas updates in real time. See `packages/atlas-components/src/stories/live-edit.ts` and `button.stories.tsx` for the pattern.

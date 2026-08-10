@@ -1,16 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "../button";
+import { atlasLiveEditStory } from "../stories/live-edit";
+import dialogSource from "./dialog.stories.source?raw";
 import { Dialog } from "./index";
 
-import type { DialogAppearance } from "./dialog.utils";
-
-export interface DialogDemoProps {
-  appearance?: DialogAppearance;
-  description?: string;
-  primaryLabel?: string;
-  title?: string;
-}
+import {
+  type DialogDemoProps,
+  dialogSourceTransform,
+} from "./dialog.stories.utils";
 
 function DialogDemo({
   appearance = "base",
@@ -75,6 +73,9 @@ const meta = {
         component:
           "Modal dialog built on Base UI parts. Style the popup with `appearance`. Pass the same `appearance` to `Dialog.Actions` so the confirm button matches; cancel defaults to a `basic` button.",
       },
+      source: {
+        transform: dialogSourceTransform,
+      },
     },
   },
 } satisfies Meta<typeof DialogDemo>;
@@ -84,6 +85,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+atlasLiveEditStory(Default, dialogSource);
 
 export const PrimaryAppearance: Story = {
   args: {

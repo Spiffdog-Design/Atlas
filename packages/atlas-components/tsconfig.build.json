@@ -3,8 +3,11 @@
   "exclude": [
     "node_modules",
     "dist",
+    "src/stories/**",
     "**/*.stories.ts",
     "**/*.stories.tsx",
+    "**/*.stories.source.tsx",
+    "**/*.stories.utils.ts",
     "**/*.test.ts",
     "**/*.test.tsx"
   ]

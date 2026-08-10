@@ -1,5 +1,6 @@
-import { join, normalize, dirname } from "node:path";
+import { dirname, join, normalize } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
+import { getCodeEditorStaticDirs } from "storybook-addon-code-editor/getStaticDirs";
 
 type CssModuleNode = {
   file?: string | null;
@@ -73,6 +74,7 @@ function createAtlasColorsCssWatchPlugin(cssPath: string) {
 }
 
 const config: StorybookConfig = {
+  staticDirs: [...getCodeEditorStaticDirs(__filename)],
   stories: [
     "../stories/**/*.mdx",
     {
@@ -84,7 +86,10 @@ const config: StorybookConfig = {
       files: "**/*.{mdx,stories.@(ts|tsx)}",
     },
   ],
-  addons: [getAbsolutePath("@storybook/addon-essentials")],
+  addons: [
+    getAbsolutePath("@storybook/addon-essentials"),
+    "storybook-addon-code-editor",
+  ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
@@ -113,11 +118,17 @@ const config: StorybookConfig = {
           },
           {
             find: "@spiffdog-design/atlas-tools",
-            replacement: join(__dirname, "../../../packages/atlas-tools/src/index.ts"),
+            replacement: join(
+              __dirname,
+              "../../../packages/atlas-tools/src/index.ts",
+            ),
           },
           {
             find: "@spiffdog-design/atlas-components",
-            replacement: join(__dirname, "../../../packages/atlas-components/src"),
+            replacement: join(
+              __dirname,
+              "../../../packages/atlas-components/src",
+            ),
           },
           {
             find: "@spiffdog-design/atlas-colors",

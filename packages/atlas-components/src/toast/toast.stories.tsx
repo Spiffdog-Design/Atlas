@@ -2,17 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 
 import { Button } from "../button";
+import { atlasLiveEditStory } from "../stories/live-edit";
+import toastSource from "./toast.stories.source?raw";
 import { ToastProvider, withToastProvider } from "./toast-provider";
 import { useToast } from "./use-toast";
 
-import type { ToastAppearance } from "./toast.utils";
-
-export interface ToastTriggerProps {
-  appearance?: ToastAppearance;
-  description?: string;
-  rounded?: boolean;
-  title?: string;
-}
+import {
+  type ToastTriggerProps,
+  toastSourceTransform,
+} from "./toast.stories.utils";
 
 function ToastTrigger({
   appearance = "base",
@@ -81,6 +79,9 @@ const meta = {
         component:
           "Toast notifications require `ToastProvider` at the app root (or a Storybook decorator). Queue toasts with `useToast().show()` — pass `appearance` for semantic tint on the title and drop shadow.",
       },
+      source: {
+        transform: toastSourceTransform,
+      },
     },
   },
 } satisfies Meta<typeof ToastTrigger>;
@@ -90,6 +91,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+atlasLiveEditStory(Default, toastSource);
 
 export const PrimaryAppearance: Story = {
   args: {
